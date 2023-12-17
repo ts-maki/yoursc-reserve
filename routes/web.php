@@ -15,8 +15,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('top');
+})->name('top');
+Route::get('/access', function () {
+    return view('access');
+})->name('access');
+Route::get('/room', function () {
+    return view('room.index');
+})->name('room');
+Route::get('/stay', function () {
+    return view('stay.index');
+})->name('stay');
+Route::get('/inquiry', function () {
+    return view('inquiry.inquiry');
+})->name('inquiry');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
