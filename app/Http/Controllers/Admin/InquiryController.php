@@ -17,7 +17,7 @@ class InquiryController extends Controller
 
     public function show($inquiry_id)
     {
-        $inquiry = Inquiry::findOrfail($inquiry_id);
-        return view('')
+        $inquiry = Inquiry::find($inquiry_id);
+        return view('admin.inquiry.show')->with('inquiry', $inquiry);
     }
 }

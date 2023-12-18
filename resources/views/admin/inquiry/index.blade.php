@@ -16,8 +16,7 @@
             </thead>
             <tbody>
                 @foreach ($inquiries as $index => $inquiry)
-                <a href="">
-                    <tr>
+                    <tr onclick="window.location.href='{{ route('admin.inquiry.show', $inquiry->id) }}'" class="cursor-pointer">
                         <th>{{ $index + 1 }}</th>
                         <th>{{ $inquiry->inquiryStatus->status }}</th>
                         <th>{{ $inquiry->inquiryType->name }}</th>
@@ -27,7 +26,6 @@
                         <th>{{ $inquiry->stay_date }}</th>
                         <th>{{ $inquiry->message }}</th>
                     </tr>
-                </a>
                 @endforeach
             </tbody>
         </table>
