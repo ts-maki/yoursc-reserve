@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Inquiry_status extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }
