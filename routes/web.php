@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +27,9 @@ Route::get('/room', function () {
 Route::get('/stay', function () {
     return view('stay.index');
 })->name('stay');
-Route::get('/inquiry', function () {
-    return view('inquiry.inquiry');
-})->name('inquiry');
+Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry');
+Route::post('inquiry/confirm', [InquiryController::class, 'comfilm'])->name('inquiry.comfilm');
+Route::post('inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
