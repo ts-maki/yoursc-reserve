@@ -9,4 +9,9 @@ class Inquiry_status extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function Inquiries()
+    {
+        return $this->hasMany(Inquiry::class);
+    }
 }
