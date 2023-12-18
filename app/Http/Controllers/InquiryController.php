@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Inquiry\CompleteInquiry;
 use App\Models\Inquiry;
 use App\Models\Inquiry_type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InquiryController extends Controller
 {
@@ -37,6 +39,8 @@ class InquiryController extends Controller
             'message' => $request->message
         ]);
 
+        $inquiry = Inquiry::findOrFail($inquiry->id);
+        Mail::to($inquiry->email)->send(new CompleteInquiry($inquiry));
         return view('top');
     }
 }
