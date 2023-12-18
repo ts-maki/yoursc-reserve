@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Inquiry\CompleteInquiry;
+use App\Mail\Inquiry\NewInquiry;
 use App\Models\Inquiry;
 use App\Models\Inquiry_type;
 use Illuminate\Http\Request;
@@ -41,6 +42,7 @@ class InquiryController extends Controller
 
         $inquiry = Inquiry::findOrFail($inquiry->id);
         Mail::to($inquiry->email)->send(new CompleteInquiry($inquiry));
-        return view('top');
+        Mail::to('reserve-admin@example.com')->send(new NewInquiry($inquiry));
+        return view('top')->with('complete_inquiry', '問い合わせが完了しました');
     }
 }
