@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
         return view('admin.index');
     })->name('admin.index');
     Route::get('/admin/inquiry', [AdminInquiryController::class, 'index'])->name('admin.inquiry.index');
+    Route::put('/admin/inquiry/{id}/{status_id}', [AdminInquiryController::class, 'update']);
     Route::get('admin/inquiry/{id}', [AdminInquiryController::class, 'show'])->name('admin.inquiry.show');
 });
 

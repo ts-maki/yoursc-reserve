@@ -11,7 +11,7 @@
                     <th>email</th>
                     <th>電話番号</th>
                     <th>宿泊日</th>
-                    <th>内容</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -32,20 +32,44 @@
                 break;
                 }
                 @endphp
-                <tr onclick="window.location.href='{{ route('admin.inquiry.show', $inquiry->id) }}'"
-                    class="cursor-pointer">
+                <tr>
                     <th>{{ $index + 1 }}</th>
-                    <th><span class="border rounded p-1 bg-opacity-50 {{ $background_color }}">{{
-                            $inquiry->inquiryStatus->status }}</span></th>
+                    <th><select name="type" id="selectStatus" class="{{ $background_color }} bg-opacity-50"
+                            onchange="changeInquiryStatus({{ $inquiry->id }}, this.value)">
+                            @foreach ($inquiry_statuses as $inquiry_status)
+                            <option value="{{ $inquiry_status->id }}" {{ $inquiry->inquiry_status_id ==
+                                $inquiry_status->id ? 'selected' : ''}} >{{ $inquiry_status->status }}</option>
+                            @endforeach
+                    </th>
                     <th>{{ $inquiry->inquiryType->name }}</th>
                     <th>{{ $inquiry->first_name }} {{ $inquiry->last_name }}</th>
                     <th>{{ $inquiry->email }}</th>
                     <th>{{ $inquiry->telephone_number }}</th>
                     <th>{{ $inquiry->stay_date }}</th>
-                    <th>{{ $inquiry->message }}</th>
+                    <th><a href="{{ route('admin.inquiry.show', $inquiry->id) }}" class="btn btn-outline-primary">詳細</a></th>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </x-container>
 </x-layout>
+
+<script>
+    const changeInquiryStatus = (inquiryId, UpdateStatusId) => {
+        console.log('問い合わせIDは' + inquiryId);
+        console.log('ステータスは' + status);
+        fetch(`/admin/inquiry/${inquiryId}/${UpdateStatusId}`, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+        })
+        .then(response => {
+            console.log(`問い合わせステータスID${UpdateStatusId}で更新成功`);
+            location.reload();
+        })
+        .catch(error => {
+            console.log('エラーが発生しました:', error);
+        });
+    }
+</script>
