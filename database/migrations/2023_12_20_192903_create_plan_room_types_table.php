@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->comment('画像');
-            $table->id()->comment('画像ID');
+        Schema::create('plan_room_type', function (Blueprint $table) {
+            $table->comment('宿泊プランと部屋の関係');
             $table->foreignId('plan_id')->comment('宿泊プランID')->constrained();
-            $table->string('path')->comment('画像URL');
-            $table->timestamp('created_at')->comment('作成日時');
-            $table->timestamp('updated_at')->comment('更新日時');
+            $table->foreignId('room_type_id')->comment('部屋の種類ID')->constrained();
+            $table->primary(['plan_id', 'room_type_id']);
+            $table->timestamps();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('plan_room_type');
     }
 };

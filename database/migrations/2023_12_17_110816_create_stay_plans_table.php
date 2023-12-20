@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stay_plans', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->comment('宿泊プラン');
             $table->id()->comment('宿泊プランID');
-            $table->foreignId('reserve_slot_id')->comment('予約枠ID')->constrained();
             $table->string('title')->comment('タイトル');
             $table->string('description')->comment('説明');
             $table->unsignedMediumInteger('fee')->comment('料金');
