@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guest_rooms', function (Blueprint $table) {
-            $table->comment('客室');
-            $table->id()->comment('客室ID');
-            $table->foreignId('guest_room_type_id')->comment('客室種別ID')->constrained();
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->comment('部屋');
+            $table->id()->comment('部屋ID');
+            $table->foreignId('room_type_id')->comment('部屋の種類ID')->constrained();
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
         });

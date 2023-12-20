@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guest_room_types', function (Blueprint $table) {
-            $table->comment('客室種別');
-            $table->id()->comment('客室種別ID');
-            $table->string('name')->unique()->comment('客室種別');
-            $table->string('description')->comment('客室の説明');
+        Schema::create('room_types', function (Blueprint $table) {
+            $table->comment('部屋の種類');
+            $table->id()->comment('部屋の種類ID');
+            $table->string('name')->unique()->comment('部屋の名前');
+            $table->string('description')->comment('部屋の説明');
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
         });
