@@ -10,4 +10,9 @@ class Inquiry_type extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function Inquiries()
+    {
+        return $this->hasMany(Inquiry::class);
+    }
 }
