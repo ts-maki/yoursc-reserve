@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Plan_room_type extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }
