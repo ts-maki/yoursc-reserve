@@ -19,4 +19,19 @@ class Reserve_slot extends Model
     {
         return $this->hasMany(Reserve::class);
     }
+
+    public function getStatusColor($is_status)
+    {
+        switch ($is_status) {
+            case 0:
+                return 'bg-success';
+                break;
+            case 1:
+                return 'bg-danger';
+                break;
+            default:
+                return 'bg-success';
+                break;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
+use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/inquiry', [AdminInquiryController::class, 'index'])->name('admin.inquiry.index');
     Route::put('/admin/inquiry/{id}/{status_id}', [AdminInquiryController::class, 'update']);
     Route::get('admin/inquiry/{id}', [AdminInquiryController::class, 'show'])->name('admin.inquiry.show');
+    Route::get('admin/reserve-slot', [ReserveSlotController::class, 'index'])->name('admin.reserve_slot.index');
+    Route::get('admin/reserve-slot/create', [ReserveSlotController::class, 'create'])->name('admin.reserve_slot.create');
+    Route::post('admin/reserve-slot/create', [ReserveSlotController::class, 'store'])->name('admin.reserve_slot.store');
 });
 
 require __DIR__ . '/auth.php';
