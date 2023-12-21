@@ -12,14 +12,18 @@
                     <th>予約日</th>
                     <th>料金</th>
                     <th>部屋の数</th>
-                    <th>予約ステータス</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($reserve_slots as $index => $reserve_slot)
                 <tr>
                     <th>{{ $index + 1 }}</th>
-                    <th><select name="room" id=""></select></th>
+                    <th>{{ $reserve_slot->room->roomType->name }}</th>
+                    <th>{{ $reserve_slot->date }}</th>
+                    <th>{{ $reserve_slot->fee }}</th>
+                    <th>{{ $reserve_slot->number_of_rooms }}</th>
+                    <th><a href="" class="btn btn-outline-primary">編集</a></th>
                 </tr>
                 @endforeach
             </tbody>
