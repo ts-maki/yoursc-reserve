@@ -11,7 +11,7 @@ class ReserveSlotController extends Controller
 {
     public function index()
     {
-        $reserve_slots = Reserve_slot::with('room')->get();
+        $reserve_slots = Reserve_slot::with('room', 'room.roomType')->get();
         return view('admin.reserve_slot.index')->with('reserve_slots', $reserve_slots);
     }
 
@@ -28,7 +28,6 @@ class ReserveSlotController extends Controller
             'date' => $request->date,
             'fee' => $request->fee,
             'number_of_rooms' => $request->number_of_rooms,
-            'is_status' => false
         ]);
 
         return to_route('admin.reserve_slot.index');
