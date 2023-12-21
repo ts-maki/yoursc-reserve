@@ -16,25 +16,9 @@
             </thead>
             <tbody>
                 @foreach ($inquiries as $index => $inquiry)
-                @php
-                switch ($inquiry->inquiry_status_id) {
-                case 1:
-                $background_color = 'bg-danger';
-                break;
-                case 2:
-                $background_color = 'bg-primary';
-                break;
-                case 3:
-                $background_color = 'bg-success';
-                break;
-                default:
-                $background_color = 'bg-danger';
-                break;
-                }
-                @endphp
                 <tr>
                     <th>{{ $index + 1 }}</th>
-                    <th><select name="type" id="selectStatus" class="{{ $background_color }} bg-opacity-50"
+                    <th><select name="type" id="selectStatus" class="{{ $inquiry->getStatusColor($inquiry->inquiry_status_id) }} bg-opacity-50"
                             onchange="changeInquiryStatus({{ $inquiry->id }}, this.value)">
                             @foreach ($inquiry_statuses as $inquiry_status)
                             <option value="{{ $inquiry_status->id }}" {{ $inquiry->inquiry_status_id ==
