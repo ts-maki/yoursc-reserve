@@ -13,6 +13,7 @@
                     <th>料金</th>
                     <th>部屋の数</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +24,15 @@
                     <th>{{ $reserve_slot->date }}</th>
                     <th>{{ $reserve_slot->fee }}</th>
                     <th>{{ $reserve_slot->number_of_rooms }}</th>
-                    <th><a href="{{ route('admin.reserve_slot.edit', $reserve_slot->id) }}" class="btn btn-outline-primary">編集</a></th>
+                    <th><a href="{{ route('admin.reserve_slot.edit', $reserve_slot->id) }}"
+                            class="btn btn-outline-primary">編集</a></th>
+                    <th>
+                        <form action="{{ route('admin.reserve_slot.delete', $reserve_slot) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="削除" class="btn btn-outline-danger">
+                        </form>
+                    </th>
                 </tr>
                 @endforeach
             </tbody>

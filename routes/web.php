@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/reserve-slot/create', [ReserveSlotController::class, 'store'])->name('admin.reserve_slot.store');
     Route::get('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'edit'])->name('admin.reserve_slot.edit');
     Route::put('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'update'])->name('admin.reserve_slot.update');
+    Route::delete('admin/reserve-slot/delete/{id}', [ReserveSlotController::class, 'destroy'])->name('admin.reserve_slot.delete');
 });
 
 require __DIR__ . '/auth.php';

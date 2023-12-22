@@ -49,4 +49,11 @@ class ReserveSlotController extends Controller
 
         return to_route('admin.reserve_slot.index');
     }
+
+    public function destroy($reserve_slot_id)
+    {
+        $reserve_slot = Reserve_slot::destroy($reserve_slot_id);
+        
+        return to_route('admin.reserve_slot.index');
+    }
 }
