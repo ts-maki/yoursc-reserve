@@ -19,7 +19,7 @@
                 @foreach ($reserve_slots as $index => $reserve_slot)
                 <tr>
                     <th>{{ $index + 1 }}</th>
-                    <th>{{ $reserve_slot->room->roomType->name }}</th>
+                    <th>{{ $reserve_slot->room->name }}</th>
                     <th>{{ $reserve_slot->date }}</th>
                     <th>{{ $reserve_slot->fee }}</th>
                     <th>{{ $reserve_slot->number_of_rooms }}</th>

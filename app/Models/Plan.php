@@ -10,9 +10,9 @@ class Plan extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function planRoomType()
+    public function planRoom()
     {
-        return $this->belongsToMany(Room_type::class, 'plan_room_type')->withTimestamps();
+        return $this->belongsToMany(Room::class, 'plan_room')->withTimestamps();
     }
 
     public function images()

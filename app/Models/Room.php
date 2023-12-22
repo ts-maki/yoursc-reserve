@@ -15,9 +15,9 @@ class Room extends Model
         return $this->hasMany(Reserve_slot::class);
     }
     
-    public function roomType()
+    public function planRoom()
     {
-        return $this->belongsTo(Room_type::class);
+        return $this->belongsToMany(Plan::class, 'plan_room')->withTimestamps();
     }
 
 }

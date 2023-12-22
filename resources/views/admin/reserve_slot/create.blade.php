@@ -8,7 +8,7 @@
                     <select name="room_id" id="">
                         <option hidden>選択してください</option>
                         @foreach ($rooms as $room)
-                        <option value="{{ $room->id }}">{{ $room->roomType->name }}</option>
+                        <option value="{{ $room->id }}">{{ $room->name }}</option>
                         @endforeach
                     </select>
                 </div>
