@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         // User::create([
         //     'name' => '管理者',
-        //     'email' => 
+        //     'email' =>
         // ]);
     }
 }

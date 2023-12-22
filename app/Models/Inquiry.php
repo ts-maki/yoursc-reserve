@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inquiry extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [];
 
     public function inquiryType()
@@ -34,7 +34,7 @@ class Inquiry extends Model
                 return 'bg-success';
                 break;
             default:
-            return 'bg-danger';
+                return 'bg-danger';
                 break;
         }
     }

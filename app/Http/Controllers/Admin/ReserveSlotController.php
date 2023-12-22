@@ -12,12 +12,14 @@ class ReserveSlotController extends Controller
     public function index()
     {
         $reserve_slots = Reserve_slot::with('room')->get();
+
         return view('admin.reserve_slot.index')->with('reserve_slots', $reserve_slots);
     }
 
     public function create()
     {
         $rooms = Room::all();
+
         return view('admin.reserve_slot.create')->with('rooms', $rooms);
     }
 
@@ -37,6 +39,7 @@ class ReserveSlotController extends Controller
     {
         $rooms = Room::all();
         $reserve_slot = Reserve_slot::findOrFail($reserve_slot_id);
+
         return view('admin.reserve_slot.edit')
             ->with('reserve_slot', $reserve_slot)
             ->with('rooms', $rooms);
@@ -53,7 +56,7 @@ class ReserveSlotController extends Controller
     public function destroy($reserve_slot_id)
     {
         $reserve_slot = Reserve_slot::destroy($reserve_slot_id);
-        
+
         return to_route('admin.reserve_slot.index');
     }
 }

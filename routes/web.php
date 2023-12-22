@@ -58,4 +58,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('admin/reserve-slot/delete/{id}', [ReserveSlotController::class, 'destroy'])->name('admin.reserve_slot.delete');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

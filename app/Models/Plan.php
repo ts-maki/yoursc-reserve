@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function planRoom()
@@ -24,5 +25,4 @@ class Plan extends Model
     {
         return $this->hasMany(Reserve::class);
     }
-
 }

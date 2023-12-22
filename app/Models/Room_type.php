@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Room_type extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function rooms()
     {
-        return $this->hasMany(Room::class); 
+        return $this->hasMany(Room::class);
     }
 
     public function planRoomType()
