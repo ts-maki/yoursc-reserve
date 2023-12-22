@@ -15,22 +15,26 @@ class RoomSeeder extends Seeder
     {
         $rooms = [
             [
-                'room_type_id' => 1,
+                'name' => '和室',
+                'description' => '時を忘れるかのような落ち着ける和室です',
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
             ],
             [
-                'room_type_id' => 2,
+                'name' => '洋室',
+                'description' => '優雅な時間を過ごせるヨーロッパ風の洋室です',
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
             ],
             [
-                'room_type_id' => 3,
+                'name' => '和洋室',
+                'description' => '和室と洋室の雰囲気を楽しめえるお部屋です',
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
             ],
             [
-                'room_type_id' => 4,
+                'name' => '宴会会場',
+                'description' => '大人数で宴会を楽しみたい方に最適なお部屋です',
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
             ],

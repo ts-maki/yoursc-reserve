@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plan_room_type', function (Blueprint $table) {
+        Schema::create('plan_room', function (Blueprint $table) {
             $table->comment('宿泊プランと部屋の関係');
             $table->foreignId('plan_id')->comment('宿泊プランID')->constrained();
-            $table->foreignId('room_type_id')->comment('部屋の種類ID')->constrained();
-            $table->primary(['plan_id', 'room_type_id']);
+            $table->foreignId('room_id')->comment('部屋ID')->constrained();
+            $table->primary(['plan_id', 'room_id']);
             $table->timestamps();
         });
     }

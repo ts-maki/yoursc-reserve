@@ -8,7 +8,7 @@
                 <div>
                     <select name="room_id" id="">
                         @foreach ($rooms as $room)
-                            <option value="{{ $room_type->id }}" {{ $reserve_slot-> ==  }}>{{ $room_type->name }}</option>
+                            {{-- <option value="{{ $room_type->id }}" {{ $reserve_slot-> ==  }}>{{ $room_type->name }}</option> --}}
                         @endforeach
                         <option value="{{ $reserve_slot->room_id }}"></option>
                     </select>
