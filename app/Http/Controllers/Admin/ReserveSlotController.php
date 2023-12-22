@@ -32,4 +32,18 @@ class ReserveSlotController extends Controller
 
         return to_route('admin.reserve_slot.index');
     }
+
+    public function edit($reserve_slot_id)
+    {
+        $rooms = Room::with('roomType')->get();
+        $reserve_slot = Reserve_slot::findOrFail($reserve_slot_id);
+        return view('admin.reserve_slot.edit')
+            ->with('reserve_slot', $reserve_slot)
+            ->with('rooms', $rooms);
+    }
+
+    public function update(Request $request)
+    {
+        
+    }
 }

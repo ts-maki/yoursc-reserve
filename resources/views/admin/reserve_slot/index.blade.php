@@ -23,7 +23,7 @@
                     <th>{{ $reserve_slot->date }}</th>
                     <th>{{ $reserve_slot->fee }}</th>
                     <th>{{ $reserve_slot->number_of_rooms }}</th>
-                    <th><a href="" class="btn btn-outline-primary">編集</a></th>
+                    <th><a href="{{ route('admin.reserve_slot.edit', $reserve_slot->id) }}" class="btn btn-outline-primary">編集</a></th>
                 </tr>
                 @endforeach
             </tbody>
