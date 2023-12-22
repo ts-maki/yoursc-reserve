@@ -42,8 +42,11 @@ class ReserveSlotController extends Controller
             ->with('rooms', $rooms);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $reserve_slot_id)
     {
-        
+        $reserve_slot = Reserve_slot::findOrFail($reserve_slot_id);
+        $reserve_slot->fill($request->all())->save();
+
+        return to_route('admin.reserve_slot.index');
     }
 }

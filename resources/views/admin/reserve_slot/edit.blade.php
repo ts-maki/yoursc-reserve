@@ -8,11 +8,20 @@
                 <div>
                     <select name="room_id" id="">
                         @foreach ($rooms as $room)
-                            {{-- <option value="{{ $room_type->id }}" {{ $reserve_slot-> ==  }}>{{ $room_type->name }}</option> --}}
+                            <option value="{{ old('room_id', $reserve_slot->room_id) }}" {{ $room->id == $reserve_slot->room_id ? 'selected' : '' }}>{{ $room->name }}</option>
                         @endforeach
-                        <option value="{{ $reserve_slot->room_id }}"></option>
                     </select>
                 </div>
+                <div>
+                    <input type="date" name="date" id="" value="{{ old('date', $reserve_slot->date) }}" min="{{ now()->toDateString() }}">
+                </div>
+                <div>
+                    <input type="number" name="fee" id="" placeholder="料金を入力" step="100" min="0"" value="{{ old('fee', $reserve_slot->fee) }}">
+                </div>
+                <div>
+                    <input type="number" name="number_of_rooms" id="" placeholder="部屋の数" min="1" step="" value="{{ old('number_of_rooms', $reserve_slot->number_of_rooms) }}">
+                </div>
+                <input type="submit" value="更新" class="btn btn-outline-primary">
             </form>
         </div>
     </x-container>
