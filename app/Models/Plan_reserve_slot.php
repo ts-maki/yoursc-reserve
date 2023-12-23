@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Plan_reserve_slot extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }
