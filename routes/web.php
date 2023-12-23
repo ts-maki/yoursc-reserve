@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
@@ -56,6 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'edit'])->name('admin.reserve_slot.edit');
     Route::put('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'update'])->name('admin.reserve_slot.update');
     Route::delete('admin/reserve-slot/delete/{id}', [ReserveSlotController::class, 'destroy'])->name('admin.reserve_slot.delete');
+    //プラン
+    Route::get('admin/plan', [PlanController::class, 'index'])->name('admin.plan.index');
+    Route::get('admin/plan/create', [PlanController::class, 'create'])->name('admin.plan.create');
+    Route::post('admin/plan/create', [PlanController::class, 'store'])->name('admin.plan.store');
 });
 
 require __DIR__.'/auth.php';

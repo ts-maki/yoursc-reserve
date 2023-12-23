@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('number_of_rooms')->comment('部屋の数');
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
+            $table->unique(['room_id', 'date']);
         });
     }
 
