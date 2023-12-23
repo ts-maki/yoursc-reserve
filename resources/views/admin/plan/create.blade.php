@@ -18,7 +18,7 @@
                         <label class="block">
                             {{-- <input type="checkbox" name="reserve_slot[]" id="" value="{{ json_encode([$reserve_slot->room_id,$reserve_slot->date]) }}"> --}}
                             <input type="checkbox" name="reserve_slot[]" id="" value="{{ $reserve_slot->id }}">
-                            {{ $reserve_slot->date }}:{{ $reserve_slot->room->name }}
+                            {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}
                         </label>
                     @endforeach
                 </div>
