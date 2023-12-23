@@ -35,4 +35,9 @@ class Reserve_slot extends Model
                 break;
         }
     }
+
+    public function planReserveSlot()
+    {
+        return $this->belongsToMany(Plan::class, 'plan_reserve_slot')->withTimestamps();
+    }
 }
