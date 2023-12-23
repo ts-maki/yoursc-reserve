@@ -47,7 +47,7 @@ class Reserve_slot extends Model
     protected function date()
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->timezone('Asia/Tokyo')->isoFormat('YYYY年M月D日(dddd)')
+            get: fn ($value) => Carbon::parse($value)->timezone('Asia/Tokyo')->isoFormat('YYYY年M月D日(d)')
         );
     }
 }
