@@ -17,6 +17,7 @@
                     <div><textarea name="description" id="description" cols="70" rows="5" id="message"></textarea>
                     </div>
                 </div>
+                <p>予約枠</p>
                 <div>
                     @foreach ($reserve_slots as $index => $reserve_slot)
                         <label class="block">
@@ -25,9 +26,6 @@
                             <input type="number" name="reserve_slot_fee[{{ $reserve_slot->id }}]" id="" step="100" placeholder="予約枠の料金">
                         </label>
                     @endforeach
-                </div>
-                <div>
-                    <input type="number" name="fee" id="" placeholder="料金を入力" step="100" min="0">
                 </div>
                 <input type="submit" value="作成" class="btn btn-outline-primary">
             </form>

@@ -37,7 +37,6 @@ class PlanController extends Controller
         $plan = Plan::create([
             'title' => $request->title,
             'description' => $request->description,
-            'fee' => 10,
         ]);
 
         foreach ($request->file('image') as $index => $file) {
