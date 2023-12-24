@@ -16,9 +16,6 @@
                     <input type="date" name="date" id="" value="{{ now()->toDateString() }}" min="{{ now()->toDateString() }}">
                 </div>
                 <div>
-                    <input type="number" name="fee" id="" placeholder="料金を入力" step="100" min="0">
-                </div>
-                <div>
                     <input type="number" name="number_of_rooms" id="" placeholder="部屋の数" min="1" step="">
                 </div>
                 <input type="submit" value="登録" class="btn btn-outline-primary">

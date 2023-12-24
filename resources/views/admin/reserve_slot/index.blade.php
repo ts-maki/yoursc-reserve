@@ -10,7 +10,6 @@
                     <th>#</th>
                     <th>部屋</th>
                     <th>予約日</th>
-                    <th>料金</th>
                     <th>部屋の数</th>
                     <th></th>
                     <th></th>
@@ -22,7 +21,6 @@
                     <th>{{ $index + 1 }}</th>
                     <th>{{ $reserve_slot->room->name }}</th>
                     <th>{{ $reserve_slot->date }}</th>
-                    <th>{{ $reserve_slot->fee }}</th>
                     <th>{{ $reserve_slot->number_of_rooms }}</th>
                     <th><a href="{{ route('admin.reserve_slot.edit', $reserve_slot->id) }}"
                             class="btn btn-outline-primary">編集</a></th>

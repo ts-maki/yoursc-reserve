@@ -22,7 +22,7 @@ class PlanController extends Controller
     
     public function create()
     {
-        $reserve_slots = Reserve_slot::with('room')->select('id', 'room_id', 'date','fee')->orderBy('date')->get();
+        $reserve_slots = Reserve_slot::with('room')->select('id', 'room_id', 'date')->orderBy('date')->get();
         return view('admin.plan.create')->with('reserve_slots', $reserve_slots);
     }
 
@@ -37,7 +37,6 @@ class PlanController extends Controller
         $plan = Plan::create([
             'title' => $request->title,
             'description' => $request->description,
-            'fee' => 10,
         ]);
 
         foreach ($request->file('image') as $index => $file) {
