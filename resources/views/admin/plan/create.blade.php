@@ -10,7 +10,7 @@
                 </div>
                 <div>
                     <p>プランに登録する画像をアップロード</p>
-                    <input type="file" name="image[]" id=""multiple>
+                    <input type="file" name="image[]" id="" multiple>
                 </div>
                 <div>
                     <label for="description">説明</label>
@@ -20,11 +20,13 @@
                 <p>予約枠</p>
                 <div>
                     @foreach ($reserve_slots as $index => $reserve_slot)
-                        <label class="block">
-                            <input type="checkbox" name="reserve_slot[]" id="" value="{{ $reserve_slot->id }}">
-                            {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}
-                            <input type="number" name="reserve_slot_fee[{{ $reserve_slot->id }}]" id="" step="100" placeholder="予約枠の料金">
-                        </label>
+                    <div>
+                        <label><input type="checkbox" name="reserve_slot[]" id="reserve_slot"
+                                value="{{ $reserve_slot->id }}" class="checkbox">
+                            {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}</label>
+                        <input type="number" name="reserve_slot_fee[{{ $reserve_slot->id }}]" id="" step="100"
+                            placeholder="予約枠の料金" class="reserve-slot">
+                    </div>
                     @endforeach
                 </div>
                 <input type="submit" value="作成" class="btn btn-outline-primary">
@@ -32,3 +34,18 @@
         </div>
     </x-container>
 </x-layout>
+
+<script>
+    const checkBoxes = document.querySelectorAll('.checkbox');
+    const inputFees = document.querySelectorAll('.reserve-slot');
+
+    checkBoxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                inputFees[index].required = true;
+            } else {
+                inputFees[index].required = false;
+            }
+        });
+    });
+</script>
