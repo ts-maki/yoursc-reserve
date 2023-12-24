@@ -4,5 +4,6 @@
         <div>
             <a href="{{ route('admin.plan.create') }}" class="btn btn-outline-primary">新規作成</a>
         </div>
+        
     </x-container>
 </x-layout>

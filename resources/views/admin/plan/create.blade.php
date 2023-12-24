@@ -2,15 +2,19 @@
     <x-container>
         <h3 class="fs-3">宿泊プラン作成</h3>
         <div>
-            <form action="{{ route('admin.plan.store') }}" method="post">
+            <form action="{{ route('admin.plan.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="title">タイトル</label>
                     <input type="text" name="title" id="title">
                 </div>
                 <div>
+                    <p>プランに登録する画像をアップロード</p>
+                    <input type="file" name="image[]" id=""multiple>
+                </div>
+                <div>
                     <label for="description">説明</label>
-                    <div><textarea name="description" id="description" cols="90" rows="10" id="message"></textarea>
+                    <div><textarea name="description" id="description" cols="70" rows="5" id="message"></textarea>
                     </div>
                 </div>
                 <div>
