@@ -14,7 +14,7 @@ class PlanController extends Controller
     public function index()
     {
         $images = Image::with('plan')->select('plan_id', 'path')->get();
-        $plans = Plan::select('title', 'description')->get();
+        $plans = Plan::select('id','title', 'description')->get();
         return view('admin.plan.index')
             ->with('plans', $plans)
             ->with('images', $images);
@@ -33,7 +33,6 @@ class PlanController extends Controller
         // dd($request->all());
         //indexが予約枠ID、値が予約枠料金の連想配列
         // dd($request->file('image'));
-
         $plan = Plan::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -56,7 +55,7 @@ class PlanController extends Controller
         }
         // dd($plan_fee);
 
-
+        //宿泊プランとプランに紐づく各予約枠の料金
         foreach ($plan_fee as $reserve_slot_id => $fee) {
             $plan_reserve_slot = Plan::findOrFail($plan->id);
             $plan_reserve_slot->planReserveSlot()->syncWithoutDetaching([
@@ -64,6 +63,24 @@ class PlanController extends Controller
             ]);
         }
 
+        //宿泊プランと部屋の関係を登録
+        foreach ($request->reserve_slot as $reserve_slot_id) {
+            $plan = Plan::findOrFail($plan->id);
+            $room_id = Reserve_slot::FindOrFail($reserve_slot_id)->value('room_id');
+            $plan->planRoom()->syncWithoutDetaching($room_id);
+        }
+
         return to_route('admin.plan.index');
     }
+
+    public function edit($plan_id)
+    {
+        return view('admin.plan.edit');
+    }
+
+    public function destroy($plan_id)
+    {
+        return view('admin.plan.edit');
+    }
+
 }
