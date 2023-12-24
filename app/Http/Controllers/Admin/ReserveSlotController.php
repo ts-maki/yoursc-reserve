@@ -28,7 +28,6 @@ class ReserveSlotController extends Controller
         $reserve_slot = Reserve_slot::create([
             'room_id' => $request->room_id,
             'date' => $request->date,
-            'fee' => $request->fee,
             'number_of_rooms' => $request->number_of_rooms,
         ]);
 
