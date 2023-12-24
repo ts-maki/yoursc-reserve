@@ -14,6 +14,7 @@ class InquiryController extends Controller
     public function create()
     {
         $inquiry_types = Inquiry_type::orderBy('id')->pluck('name');
+
         return view('inquiry.form')->with('inquiry_types', $inquiry_types);
     }
 
@@ -22,6 +23,7 @@ class InquiryController extends Controller
         // dd($request);
         $request->session()->put('inquiry_data', $request->all());
         $inquiry_data = $request->session()->get('inquiry_data');
+
         // dd($inquiry_data);
         return view('inquiry.comfilm')->with('inquiry_data', $inquiry_data);
     }
@@ -37,12 +39,15 @@ class InquiryController extends Controller
             'email' => $request->email,
             'telephone_number' => $request->tel,
             'stay_date' => $request->date,
-            'message' => $request->message
+            'message' => $request->message,
         ]);
 
         $inquiry = Inquiry::findOrFail($inquiry->id);
         Mail::to($inquiry->email)->send(new CompleteInquiry($inquiry));
         Mail::to('reserve-admin@example.com')->send(new NewInquiry($inquiry));
+
+        $request->session()->forget('inquiry_data');
+
         return view('top')->with('complete_inquiry', '問い合わせが完了しました');
     }
 }

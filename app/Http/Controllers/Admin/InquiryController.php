@@ -6,15 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Inquiry;
 use App\Models\Inquiry_status;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 class InquiryController extends Controller
 {
     public function index()
     {
         $inquiries = Inquiry::with('inquiryType', 'inquiryStatus')->get();
         $inquiry_statuses = Inquiry_status::with('inquiries')->get();
+
         return view('admin.inquiry.index')
             ->with('inquiries', $inquiries)
             ->with('inquiry_statuses', $inquiry_statuses);
@@ -23,6 +21,7 @@ class InquiryController extends Controller
     public function show($inquiry_id)
     {
         $inquiry = Inquiry::find($inquiry_id);
+
         return view('admin.inquiry.show')->with('inquiry', $inquiry);
     }
 

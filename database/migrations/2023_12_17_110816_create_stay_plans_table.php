@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id()->comment('宿泊プランID');
             $table->string('title')->comment('タイトル');
             $table->string('description')->comment('説明');
-            $table->unsignedMediumInteger('fee')->comment('料金');
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
         });

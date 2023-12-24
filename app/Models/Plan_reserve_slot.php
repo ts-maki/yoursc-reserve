@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stay_plan extends Model
+class Plan_reserve_slot extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }

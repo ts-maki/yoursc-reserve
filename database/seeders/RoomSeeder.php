@@ -2,39 +2,43 @@
 
 namespace Database\Seeders;
 
-use App\Models\Inquiry_type;
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 
-class InquiryTypeSeeder extends Seeder
+class RoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
-        $inquiry_types = [
+        $rooms = [
             [
-                'name' => 'ご予約について',
+                'name' => '和室',
+                'description' => '時を忘れるかのような落ち着ける和室です',
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d'),
             ],
             [
-                'name' => '施設について',
+                'name' => '洋室',
+                'description' => '優雅な時間を過ごせるヨーロッパ風の洋室です',
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d'),
             ],
             [
-                'name' => '宴会・会場について',
+                'name' => '和洋室',
+                'description' => '和室と洋室の雰囲気を楽しめえるお部屋です',
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d'),
             ],
             [
-                'name' => 'その他',
+                'name' => '宴会会場',
+                'description' => '大人数で宴会を楽しみたい方に最適なお部屋です',
                 'created_at' => date('Y-m-d'),
                 'updated_at' => date('Y-m-d'),
             ],
         ];
-        Inquiry_type::insert($inquiry_types);
+
+        Room::insert($rooms);
     }
 }

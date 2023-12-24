@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->comment('部屋');
             $table->id()->comment('部屋ID');
-            $table->foreignId('room_type_id')->comment('部屋の種類ID')->constrained();
+            $table->string('name')->comment('名前');
+            $table->text('description')->comment('説明');
             $table->timestamp('created_at')->comment('作成日時');
             $table->timestamp('updated_at')->comment('更新日時');
         });

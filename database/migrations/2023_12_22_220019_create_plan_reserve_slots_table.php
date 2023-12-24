@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plan_room', function (Blueprint $table) {
-            $table->comment('宿泊プランと部屋の関係');
+        Schema::create('plan_reserve_slots', function (Blueprint $table) {
+            $table->comment('宿泊プランと予約枠の関係');
             $table->foreignId('plan_id')->comment('宿泊プランID')->constrained();
-            $table->foreignId('room_id')->comment('部屋ID')->constrained();
-            $table->primary(['plan_id', 'room_id']);
+            $table->foreignId('reserve_slot_id')->comment('予約枠ID')->constrained();
+            $table->primary(['plan_id', 'reserve_slot_id']);
+            $table->unsignedMediumInteger('fee')->comment('料金');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plan_room_type');
+        Schema::dropIfExists('plan_reserve_slots');
     }
 };

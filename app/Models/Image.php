@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+    
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }
