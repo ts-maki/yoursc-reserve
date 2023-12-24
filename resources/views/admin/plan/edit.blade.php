@@ -1,0 +1,62 @@
+<x-layout>
+    <x-container>
+        <h3 class="fs-3">宿泊プラン編集</h3>
+        <div>
+            <form action="{{ route('admin.plan.update', $plan->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                {{-- <div>
+                    <label for="title">タイトル</label>
+                    <input type="text" name="title" id="title" value="{{ old('title', $plan->title) }}">
+                </div> --}}
+                <div>
+                    <p>現在のプラン画像</p>
+                    {{-- {{ dd($plan->images) }} --}}
+                    <div class="row">
+                        @foreach ($plan->images as $index => $image)
+                        <div class="d-flex flex-column justify-content-between col">
+                            <img src="{{ asset($image->path) }}" alt="" width="150">
+                            <input type="file" name="image[{{ $image->id }}]" id="" >
+                        </div>
+                        @endforeach
+                        <p class="mt-4">追加で画像を登録</p>
+                        <input type="file" name="image_plus[]" id="" multiple>
+                    </div>
+                </div>
+                {{-- <div>
+                    <label for="description">説明</label>
+                    <div><textarea name="description" id="description" cols="70" rows="5" id="message"></textarea>
+                    </div>
+                </div> --}}
+                <p>予約枠</p>
+                {{-- <div>
+                    @foreach ($reserve_slots as $index => $reserve_slot)
+                    <div>
+                        <label><input type="checkbox" name="reserve_slot[]" id="reserve_slot"
+                                value="{{ $reserve_slot->id }}" class="checkbox">
+                            {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}</label>
+                        <input type="number" name="reserve_slot_fee[{{ $reserve_slot->id }}]" id="" step="100"
+                            placeholder="予約枠の料金" class="reserve-slot">
+                    </div>
+                    @endforeach
+                </div> --}}
+                <input type="submit" value="作成" class="btn btn-outline-primary">
+            </form>
+        </div>
+    </x-container>
+</x-layout>
+
+<script>
+    const checkBoxes = document.querySelectorAll('.checkbox');
+    const inputFees = document.querySelectorAll('.reserve-slot');
+
+    checkBoxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                inputFees[index].required = true;
+            } else {
+                inputFees[index].required = false;
+            }
+        });
+    });
+</script>

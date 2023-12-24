@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\PlanEditController;
 use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
@@ -61,7 +62,8 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/plan', [PlanController::class, 'index'])->name('admin.plan.index');
     Route::get('admin/plan/create', [PlanController::class, 'create'])->name('admin.plan.create');
     Route::post('admin/plan/create', [PlanController::class, 'store'])->name('admin.plan.store');
-    Route::get('admin/plan/edit/{id}', [PlanController::class, 'edit'])->name('admin.plan.edit');
+    Route::get('admin/plan/edit/{id}', [PlanEditController::class, 'edit'])->name('admin.plan.edit');
+    Route::put('admin/plan/edit/{id}', [PlanEditController::class, 'update'])->name('admin.plan.update');
     Route::delete('admin/plan/delete/{id}', [PlanController::class, 'destroy'])->name('admin.plan.delete');
 });
 

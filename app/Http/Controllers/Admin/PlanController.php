@@ -28,11 +28,6 @@ class PlanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        //チェックされた予約枠IDと料金の紐づけ
-        // dd($request->all());
-        //indexが予約枠ID、値が予約枠料金の連想配列
-        // dd($request->file('image'));
         $plan = Plan::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -48,12 +43,11 @@ class PlanController extends Controller
                 'path' => $file_path
             ]);
         }
-        // dd($path);
+
         $plan_fee = [];
         foreach ($request->reserve_slot as $reserve_slot) {
             $plan_fee[$reserve_slot] = $request->reserve_slot_fee[$reserve_slot];
         }
-        // dd($plan_fee);
 
         //宿泊プランとプランに紐づく各予約枠の料金
         foreach ($plan_fee as $reserve_slot_id => $fee) {
@@ -75,7 +69,8 @@ class PlanController extends Controller
 
     public function edit($plan_id)
     {
-        return view('admin.plan.edit');
+        $plan = Plan::with('images')->findOrFail($plan_id);
+        return view('admin.plan.edit')->with('plan', $plan);
     }
 
     public function destroy($plan_id)
