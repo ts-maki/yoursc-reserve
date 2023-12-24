@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('plan_reserve_slots', function (Blueprint $table) {
-            $table->id();
-            $table->comment('宿泊プランと部屋の関係');
+            $table->comment('宿泊プランと予約枠の関係');
             $table->foreignId('plan_id')->comment('宿泊プランID')->constrained();
             $table->foreignId('reserve_slot_id')->comment('予約枠ID')->constrained();
+            $table->primary(['plan_id', 'reserve_slot_id']);
             $table->unsignedMediumInteger('fee')->comment('料金');
             $table->timestamps();
         });
