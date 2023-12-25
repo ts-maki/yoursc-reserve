@@ -9,4 +9,9 @@ class Plan_reserve_slot extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function reserveSlot()
+    {
+        return $this->belongsTo(Reserve_slot::class);
+    }
 }
