@@ -29,9 +29,9 @@ class PlanEditController extends Controller
     public function update(Request $request, $plan_id)
     {
 
-
+        // dd(collect($request->all()));
         $plan = Plan::findOrFail($plan_id);
-
+        $plan_reserve = Plan_reserve_slot::where('plan_id', $plan_id)->get();
         $plan->title = $request->title;
         $plan->description = $request->description;
         $plan->save();
@@ -81,28 +81,39 @@ class PlanEditController extends Controller
         }
 
         //チェックから外れた予約枠IDを格納する配列
-        $is_not_reserve_slot_id = [];
+        $unselected_reserve_slot_ids = [];
 
         //チェックした予約枠IDを格納する配列
         $reserve_slot_keys = array_keys($plan_fee);
 
         //現在の宿泊プランに紐づく予約枠IDを格納する配列
-        $current_reserve_slots = Plan_reserve_slot::where('plan_id', $plan_id)->pluck('reserve_slot_id')->toArray();
+        $current_reserve_slots = $plan_reserve->pluck('reserve_slot_id')->all();
 
         //チェックから外れた予約枠IDを抽出
         $array = array_merge($reserve_slot_keys, $current_reserve_slots);
         $array = array_unique($array);
-        $is_not_reserve_slot_id = array_diff($array, $reserve_slot_keys);
+        $unselected_reserve_slot_ids = array_diff($array, $reserve_slot_keys);
 
-        foreach ($plan_fee as $reserve_slot_id => $fee) {
-            $plan->planReserveSlot()->syncWithoutDetaching([$reserve_slot_id => ['fee' => $fee]]);
+        //チェック変更がない予約枠ID
+        $common_reserve_slot_ids = array_intersect($reserve_slot_keys, $current_reserve_slots);
+        $update_plan_fee = [];
+        foreach ($common_reserve_slot_ids as $id) {
+            $update_plan_fee[$id] = $plan_fee[$id];
+        }
+
+        //料金のみの変更であれば更新
+        foreach ($update_plan_fee as $reserve_slot_id => $fee) {
+            $existed_reserve_slot_fee = $plan_reserve->where('reserve_slot_id', $reserve_slot_id)->value('fee');
+            if ((int)$fee !== $existed_reserve_slot_fee) {
+                $plan->planReserveSlot()->updateExistingPivot($reserve_slot_id, ['fee' => $fee ]);
+            }
         }
 
         /* チェックから外れた予約枠IDの関連解除
         *  全部の関連を解除してからチェックされた予約枠IDの関連付けでも同じ
         */
-        foreach ($is_not_reserve_slot_id as $key ) {
-            $plan->planReserveSlot()->detach($key);
+        foreach ($unselected_reserve_slot_ids as $id ) {
+            $plan->planReserveSlot()->detach($id);
         }
 
         // dd($current_reserve_slots);
