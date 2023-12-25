@@ -14,6 +14,7 @@
                     {{-- {{ dd($plan->images) }} --}}
                     <div class="row">
                         @foreach ($plan->images as $index => $image)
+                        {{-- {{ dd($image->id) }} --}}
                         <div class="d-flex flex-column justify-content-between col">
                             <img src="{{ asset($image->path) }}" alt="" width="150">
                             <input type="file" name="image[{{ $image->id }}]" id="" >

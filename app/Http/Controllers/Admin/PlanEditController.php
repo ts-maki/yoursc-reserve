@@ -17,10 +17,9 @@ class PlanEditController extends Controller
 
     public function update(Request $request, $plan_id)
     {
-        // dd($request->file('image_plus'));
-
         //既存の画像更新
-        if (!is_null($request->file('image'))) {
+        // dd($request->image);
+        if ($request->hasFile('image')) {
             foreach ($request->file('image') as $index => $file) {
                 $upload_file_name = $file->getClientOriginalName();
                 $existed_file = Image::where('id', $index)->first();
@@ -37,17 +36,16 @@ class PlanEditController extends Controller
         }
 
         //宿泊プランの追加画像の登録
-        if (!is_null($request->file('image_plus'))) {
+        if ($request->hasFile('image_plus')) {
             foreach ($request->file('image_plus') as $file) {
                 $upload_file_name = $file->getClientOriginalName();
-                $file_path = 'storage/images'. $upload_file_name;
+                $file_path = 'storage/images/'. $upload_file_name;
                 $path = $file->storeAs('images', $upload_file_name, 'public');
-                //ファイル名が既存と異なる場合登録
 
-                //TODO 該当の宿泊プランでかつ既存で登録されていない場合に登録するようにする
-                $is_file_name = Image::where('path', $file_path)->exists();
-                dd($is_file_name);
-                if ($is_file_name !== true) {
+                //ファイル名が宿泊プランと紐づくものと異なる場合登録
+                $is_file_name = Image::where('plan_id', $plan_id)->where('path', $file_path)->exists();
+                // dd($is_file_name);
+                if (!$is_file_name) {
                     Image::create([
                         'plan_id' => $plan_id,
                         'path' => $file_path,
