@@ -120,11 +120,8 @@ class PlanEditController extends Controller
         }
 
         // チェックから外れた予約枠IDの関連解除
-        foreach ($unselected_reserve_slot_ids as $id ) {
-            $plan->planReserveSlot()->detach($id);
-        }
-
-        // dd($current_reserve_slots);
+        $plan->planReserveSlot()->detach($unselected_reserve_slot_ids);
+        
         return to_route('admin.plan.index');
     }
 }
