@@ -25,11 +25,11 @@
                     <th><a href="{{ route('admin.plan.edit', $plan->id) }}"
                             class="btn btn-outline-primary">編集</a></th>
                     <th>
-                        <form action="{{ route('admin.plan.delete', $plan->id) }}" method="post">
+                        {{-- <form action="{{ route('admin.plan.delete', $plan->id) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="削除" class="btn btn-outline-danger">
-                        </form>
+                        </form> --}}
                     </th>
                 </tr>
                 @endforeach

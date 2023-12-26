@@ -13,10 +13,16 @@
                     <p>現在のプラン画像</p>
                     <div class="row">
                         @foreach ($plan->images as $index => $image)
-                        <div class="d-flex flex-column justify-content-between col">
-                            <img src="{{ asset($image->path) }}" alt="" width="150">
-                            <input type="file" name="image[{{ $image->id }}]" id="">
-                        </div>
+                            <div class="d-flex flex-column justify-content-between col">
+                                <img src="{{ asset($image->path) }}" alt="{{ $plan->title }}に登録している画像" width="150">
+                                <form action="{{ route('admin.plan.image.delete', ['plan_id' => $plan->id, 'image_id' => $image->id]) }}" method="post" id="image-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="削除" class="btn btn-outline-danger" class="btn-sm" form="image-form">
+                                </form>
+                                <p>画像差し替え</p>
+                                <input type="file" name="image[{{ $image->id }}]" id="">
+                            </div>
                         @endforeach
                         <p class="mt-4">追加で画像を登録</p>
                         <input type="file" name="image_plus[]" id="" multiple>

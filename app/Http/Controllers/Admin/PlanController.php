@@ -67,15 +67,4 @@ class PlanController extends Controller
         return to_route('admin.plan.index');
     }
 
-    public function edit($plan_id)
-    {
-        $plan = Plan::with('images')->findOrFail($plan_id);
-        return view('admin.plan.edit')->with('plan', $plan);
-    }
-
-    public function destroy($plan_id)
-    {
-        return view('admin.plan.edit');
-    }
-
 }

@@ -7,11 +7,8 @@ use App\Models\Image;
 use App\Models\Plan;
 use App\Models\Plan_reserve_slot;
 use App\Models\Reserve_slot;
-use DeepCopy\Filter\Filter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Stmt\TryCatch;
 
 class PlanEditController extends Controller
 {
@@ -123,5 +120,11 @@ class PlanEditController extends Controller
         $plan->planReserveSlot()->detach($unselected_reserve_slot_ids);
         
         return to_route('admin.plan.index');
+    }
+
+    public function destroyImage($plan_id, $image_id)
+    {
+        Image::destroy($image_id);
+        return to_route('admin.plan.edit', $plan_id);
     }
 }

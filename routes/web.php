@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/plan/create', [PlanController::class, 'store'])->name('admin.plan.store');
     Route::get('admin/plan/edit/{id}', [PlanEditController::class, 'edit'])->name('admin.plan.edit');
     Route::put('admin/plan/edit/{id}', [PlanEditController::class, 'update'])->name('admin.plan.update');
-    Route::delete('admin/plan/delete/{id}', [PlanController::class, 'destroy'])->name('admin.plan.delete');
+    Route::delete('admin/plan/{plan_id}/delete/image/{image_id}', [PlanEditController::class, 'destroyImage'])->name('admin.plan.image.delete');
 });
 
 require __DIR__.'/auth.php';
