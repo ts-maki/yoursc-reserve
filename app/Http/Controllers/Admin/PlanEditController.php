@@ -124,7 +124,14 @@ class PlanEditController extends Controller
 
     public function destroyImage($plan_id, $image_id)
     {
+        dd(url()->current(), $image_id);
+        // dd($image_id);
         Image::destroy($image_id);
-        return to_route('admin.plan.edit', $plan_id);
+
+        //削除画像がどのプランでも使われていない場合ストレージから削除
+        // $is_file_name = Image::findOrFail($image_id)->value('path')->exists();
+        // Log::debug('削除画像ファイル名がストレージにあるか？', [$is_file_name]);
+        return back();
+
     }
 }

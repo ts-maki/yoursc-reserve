@@ -16,14 +16,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($plans as $index => $plan)
+                @forelse ($plans as $index => $plan)
                 <tr>
                     <th>{{ $index + 1 }}</th>
-                    <th><img src="{{ asset($plan->images[0]->path) }}" alt="" width="100"></th>
+                    <th>
+                        @if (empty($plan->images[0]))
+                        <p>画像なし</p>
+                        @else
+                        <img src="{{ asset($plan->images[0]->path) }}" alt="" width="100">
+                        @endif
+                    </th>
                     <th>{{ $plan->title }}</th>
                     <th>{{ $plan->description }}</th>
-                    <th><a href="{{ route('admin.plan.edit', $plan->id) }}"
-                            class="btn btn-outline-primary">編集</a></th>
+                    <th><a href="{{ route('admin.plan.edit', $plan->id) }}" class="btn btn-outline-primary">編集</a></th>
                     <th>
                         {{-- <form action="{{ route('admin.plan.delete', $plan->id) }}" method="post">
                             @csrf
@@ -32,7 +37,9 @@
                         </form> --}}
                     </th>
                 </tr>
-                @endforeach
+                @empty
+                    <p>宿泊プランがありません</p>
+                @endforelse
             </tbody>
         </table>
     </x-container>

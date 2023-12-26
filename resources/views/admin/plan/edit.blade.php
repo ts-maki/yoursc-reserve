@@ -2,36 +2,35 @@
     <x-container>
         <h3 class="fs-3">宿泊プラン編集</h3>
         <div>
-            <form action="{{ route('admin.plan.update', $plan->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
                 <div>
                     <label for="title">タイトル</label>
-                    <input type="text" name="title" id="title" value="{{ old('title', $plan->title) }}">
+                    <input type="text" name="title" id="title" value="{{ old('title', $plan->title) }}" form="plan">
                 </div>
                 <div>
-                    <p>現在のプラン画像</p>
+                    
                     <div class="row">
-                        @foreach ($plan->images as $index => $image)
+                        @forelse ($plan->images as $index => $image)
                             <div class="d-flex flex-column justify-content-between col">
                                 <img src="{{ asset($image->path) }}" alt="{{ $plan->title }}に登録している画像" width="150">
-                                <form action="{{ route('admin.plan.image.delete', ['plan_id' => $plan->id, 'image_id' => $image->id]) }}" method="post" id="image-form">
+                                <form action="{{ route('admin.plan.image.delete', ['plan_id' => $plan->id, 'image_id' => $image->id]) }}" method="post" id="image-form-{{ $image->id }}">
                                     @csrf
                                     @method('DELETE')
-                                    <input type="submit" value="削除" class="btn btn-outline-danger" class="btn-sm" form="image-form">
+                                    <input type="submit" value="削除" class="btn btn-outline-danger" class="btn-sm" form="image-form-{{ $image->id }}">
                                 </form>
                                 <p>画像差し替え</p>
-                                <input type="file" name="image[{{ $image->id }}]" id="">
+                                <input type="file" name="image[{{ $image->id }}]" id="" form="plan">
                             </div>
-                        @endforeach
-                        <p class="mt-4">追加で画像を登録</p>
-                        <input type="file" name="image_plus[]" id="" multiple>
+                            @empty
+                            <p>画像が登録されていません</p>
+                        @endforelse
+                        <p class="mt-4">画像を登録</p>
+                        <input type="file" name="image_plus[]" id="" multiple form="plan">
                     </div>
                 </div>
                 <div>
                     <label for="description">説明</label>
                     <div><textarea name="description" id="description" cols="70" rows="5"
-                            id="message">{{ old('description', $plan->description) }}</textarea>
+                            id="message" form="plan">{{ old('description', $plan->description) }}</textarea>
                     </div>
                 </div>
                 <p>予約枠</p>
@@ -45,6 +44,7 @@
                                         checked
                                     @endif
                                 @endforeach
+                                form="plan"
                                 >
                         {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}
                         </label>
@@ -55,12 +55,16 @@
                                     value="{{ old('reserve_slot_fee', $plan_reserve_slot->fee) }}"
                                 @endif
                             @endforeach
+                            form="plan"
                             >
                     </div>
                     @endforeach
                 </div>
-                <input type="submit" value="更新" class="btn btn-outline-primary">
-            </form>
+                <form action="{{ route('admin.plan.update', $plan->id) }}" method="post" enctype="multipart/form-data" id="plan">
+                    @csrf
+                    @method('PUT')
+                    <input type="submit" value="更新" class="btn btn-outline-primary">
+                </form>
         </div>
     </x-container>
 </x-layout>

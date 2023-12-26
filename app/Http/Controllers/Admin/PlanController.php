@@ -36,7 +36,8 @@ class PlanController extends Controller
         foreach ($request->file('image') as $index => $file) {
             $file_name = $file->getClientOriginalName();
             $file_path = 'storage/images/'. $file_name;
-            // dd($file_path);
+
+            //TODO 既にあるファイル名の場合はストレージに上書きされるのか？
             $path = $file->storeAs('images', $file_name, 'public');
             Image::create([
                 'plan_id' => $plan->id,
