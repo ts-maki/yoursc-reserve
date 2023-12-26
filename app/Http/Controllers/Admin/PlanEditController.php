@@ -90,9 +90,9 @@ class PlanEditController extends Controller
         $current_reserve_slots = $plan_reserve->pluck('reserve_slot_id')->all();
 
         //チェックから外れた予約枠IDを抽出
-        $array = array_merge($reserve_slot_keys, $current_reserve_slots);
-        $array = array_unique($array);
-        $unselected_reserve_slot_ids = array_diff($array, $reserve_slot_keys);
+        $merge_array = array_merge($reserve_slot_keys, $current_reserve_slots);
+        $merge_array = array_unique($merge_array);
+        $unselected_reserve_slot_ids = array_diff($merge_array, $reserve_slot_keys);
 
         //チェック変更がない予約枠ID
         $common_reserve_slot_ids = array_intersect($reserve_slot_keys, $current_reserve_slots);
@@ -109,9 +109,17 @@ class PlanEditController extends Controller
             }
         }
 
-        /* チェックから外れた予約枠IDの関連解除
-        *  全部の関連を解除してからチェックされた予約枠IDの関連付けでも同じ
-        */
+        //新規チェックの予約枠の登録
+        $selected_ids = array_diff($merge_array, $current_reserve_slots);
+        $update_plan_fee = [];
+        foreach ($selected_ids as $selected_id) {
+            $update_plan_fee[$selected_id] = $plan_fee[$selected_id];
+        }
+        foreach ($update_plan_fee as $reserve_slot_id => $fee) {
+            $plan->planReserveSlot()->syncWithoutDetaching([$reserve_slot_id => ['fee' => $fee]]);
+        }
+
+        // チェックから外れた予約枠IDの関連解除
         foreach ($unselected_reserve_slot_ids as $id ) {
             $plan->planReserveSlot()->detach($id);
         }
