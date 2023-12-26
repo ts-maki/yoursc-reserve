@@ -9,6 +9,7 @@ use App\Models\Plan_reserve_slot;
 use App\Models\Reserve_slot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PlanEditController extends Controller
 {
@@ -122,15 +123,21 @@ class PlanEditController extends Controller
         return to_route('admin.plan.index');
     }
 
-    public function destroyImage($plan_id, $image_id)
+    public function destroyImage($image_id)
     {
-        dd(url()->current(), $image_id);
-        // dd($image_id);
+        $file_path = Image::findOrFail($image_id)->path;
         Image::destroy($image_id);
-
-        //削除画像がどのプランでも使われていない場合ストレージから削除
-        // $is_file_name = Image::findOrFail($image_id)->value('path')->exists();
-        // Log::debug('削除画像ファイル名がストレージにあるか？', [$is_file_name]);
+        $file_name = str_replace('storage/', '', $file_path);
+        $is_file_path = Image::where('path', $file_path)->exists();
+        // dd(Storage::disk('public')->exists($file_name), $file_name, $image_id, url()->current(), $file_path);
+        Log::debug('削除画像ファイル名がデータベースにあるか？', [$is_file_path]);
+        // dd(Storage::disk('public')->exists($file_name), $file_name);
+        if (!$is_file_path) {
+            if (Storage::disk('public')->exists($file_name)) {
+                Storage::disk('public')->delete($file_name);
+                Log::debug('ストレージから削除成功', [$file_name]);
+            }
+        }
         return back();
 
     }

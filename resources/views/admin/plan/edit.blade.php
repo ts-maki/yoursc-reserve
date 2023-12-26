@@ -12,7 +12,7 @@
                         @forelse ($plan->images as $index => $image)
                             <div class="d-flex flex-column justify-content-between col">
                                 <img src="{{ asset($image->path) }}" alt="{{ $plan->title }}に登録している画像" width="150">
-                                <form action="{{ route('admin.plan.image.delete', ['plan_id' => $plan->id, 'image_id' => $image->id]) }}" method="post">
+                                <form action="{{ route('admin.plan.image.delete', $image->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <input type="submit" value="削除" class="btn btn-outline-danger" class="btn-sm">
