@@ -52,18 +52,3 @@
         </div>
     </x-container>
 </x-layout>
-
-<script>
-    const checkBoxes = document.querySelectorAll('.checkbox');
-    const inputFees = document.querySelectorAll('.reserve-slot');
-
-    checkBoxes.forEach((checkbox, index) => {
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                inputFees[index].required = true;
-            } else {
-                inputFees[index].required = false;
-            }
-        });
-    });
-</script>
