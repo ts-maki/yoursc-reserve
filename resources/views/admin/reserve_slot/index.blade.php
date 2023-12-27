@@ -16,6 +16,7 @@
                 </tr>
             </thead>
             <tbody>
+                {{-- {{ dd($reserve_slots) }} --}}
                 @foreach ($reserve_slots as $index => $reserve_slot)
                 <tr>
                     <th>{{ $index + 1 }}</th>

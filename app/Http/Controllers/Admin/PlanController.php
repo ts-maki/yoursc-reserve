@@ -14,7 +14,7 @@ class PlanController extends Controller
     public function index()
     {
         $images = Image::with('plan')->select('plan_id', 'path')->get();
-        $plans = Plan::select('title', 'description')->get();
+        $plans = Plan::select('id','title', 'description')->get();
         return view('admin.plan.index')
             ->with('plans', $plans)
             ->with('images', $images);
@@ -28,12 +28,6 @@ class PlanController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        //チェックされた予約枠IDと料金の紐づけ
-        // dd($request->all());
-        //indexが予約枠ID、値が予約枠料金の連想配列
-        // dd($request->file('image'));
-
         $plan = Plan::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -42,21 +36,21 @@ class PlanController extends Controller
         foreach ($request->file('image') as $index => $file) {
             $file_name = $file->getClientOriginalName();
             $file_path = 'storage/images/'. $file_name;
-            // dd($file_path);
+
+            //TODO 既にあるファイル名の場合はストレージに上書きされるのか？
             $path = $file->storeAs('images', $file_name, 'public');
             Image::create([
                 'plan_id' => $plan->id,
                 'path' => $file_path
             ]);
         }
-        // dd($path);
+
         $plan_fee = [];
         foreach ($request->reserve_slot as $reserve_slot) {
             $plan_fee[$reserve_slot] = $request->reserve_slot_fee[$reserve_slot];
         }
-        // dd($plan_fee);
 
-
+        //宿泊プランとプランに紐づく各予約枠の料金
         foreach ($plan_fee as $reserve_slot_id => $fee) {
             $plan_reserve_slot = Plan::findOrFail($plan->id);
             $plan_reserve_slot->planReserveSlot()->syncWithoutDetaching([
@@ -64,6 +58,14 @@ class PlanController extends Controller
             ]);
         }
 
+        //宿泊プランと部屋の関係を登録
+        foreach ($request->reserve_slot as $reserve_slot_id) {
+            $plan = Plan::findOrFail($plan->id);
+            $room_id = Reserve_slot::FindOrFail($reserve_slot_id)->room_id;
+            $plan->planRoom()->syncWithoutDetaching($room_id);
+        }
+
         return to_route('admin.plan.index');
     }
+
 }
