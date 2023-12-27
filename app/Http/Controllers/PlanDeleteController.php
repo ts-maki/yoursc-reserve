@@ -14,7 +14,6 @@ class PlanDeleteController extends Controller
 {
     public function check($plan_id)
     {
-        //TODO ネストしたEagerロードしているつもりだが、viewに表示した際のsqlクエリログを確認する→Eagerロードできてる
         $plan = Plan::with('planReserveSlots.reserveSlot.room',)->findOrFail($plan_id);
         return view('admin.plan.delete')->with('plan', $plan);
     }
