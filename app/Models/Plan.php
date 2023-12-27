@@ -30,4 +30,9 @@ class Plan extends Model
     {
         return $this->belongsToMany(Reserve_slot::class, 'plan_reserve_slots')->withTimestamps();
     }
+
+    public function planReserveSlots()
+    {
+        return $this->hasMany(Plan_reserve_slot::class);
+    }
 }
