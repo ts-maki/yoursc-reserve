@@ -13,11 +13,11 @@ class PlanController extends Controller
 {
     public function index()
     {
-        $images = Image::with('plan')->select('plan_id', 'path')->get();
-        $plans = Plan::select('id','title', 'description')->get();
+        // TODO imageはプランのリレーションから取ってくる
+        
+        $plans = Plan::with('images')->get();
         return view('admin.plan.index')
-            ->with('plans', $plans)
-            ->with('images', $images);
+            ->with('plans', $plans);
     }
     
     public function create()

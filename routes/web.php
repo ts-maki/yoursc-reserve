@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\PlanEditController;
 use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\PlanDeleteController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/plan/edit/{id}', [PlanEditController::class, 'edit'])->name('admin.plan.edit');
     Route::put('admin/plan/edit/{id}', [PlanEditController::class, 'update'])->name('admin.plan.update');
     Route::delete('admin/plan/delete/image/{image_id}', [PlanEditController::class, 'destroyImage'])->name('admin.plan.image.delete');
+    Route::get('admin/plan/delete/{id}', [PlanDeleteController::class, 'check'])->name('admin.plan.check');
+    Route::delete('admin/plan/delete/{id}', [PlanDeleteController::class, 'destroy'])->name('admin.plan.delete');
 });
 
 require __DIR__.'/auth.php';
