@@ -20,16 +20,16 @@
                     <a class="nav-link text-dark p-2" href="{{ route('register') }}">ユーザー登録</a>
                 </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link text-dark p-2" href="{{ route('stay') }}">宿泊プラン</a>
+                    <a class="nav-link text-dark p-2" href="{{ route('plan.index') }}">宿泊プラン</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark p-2" href="{{ route('room') }}">客室紹介</a>
+                    <a class="nav-link text-dark p-2" href="{{ route('room.index') }}">客室紹介</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark p-2" href="{{ route('inquiry') }}">お問い合わせ</a>
+                    <a class="nav-link text-dark p-2" href="{{ route('inquiry.index') }}">お問い合わせ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark p-2" href="{{ route('access') }}">アクセス案内</a>
+                    <a class="nav-link text-dark p-2" href="{{ route('access.index') }}">アクセス案内</a>
                 </li>
             </ul>
         </nav>

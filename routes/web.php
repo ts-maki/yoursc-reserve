@@ -24,15 +24,15 @@ Route::get('/', function () {
     return view('top');
 })->name('top');
 Route::get('/access', function () {
-    return view('access');
-})->name('access');
+    return view('access.index');
+})->name('access.index');
 Route::get('/room', function () {
     return view('room.index');
-})->name('room');
+})->name('room.index');
 Route::get('/stay', function () {
-    return view('stay.index');
-})->name('stay');
-Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry');
+    return view('plan.index');
+})->name('plan.index');
+Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');
 Route::post('inquiry/confirm', [InquiryController::class, 'comfilm'])->name('inquiry.comfilm');
 Route::post('inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
 
