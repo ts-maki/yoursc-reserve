@@ -61,7 +61,7 @@ class PlanController extends Controller
         //宿泊プランと部屋の関係を登録
         foreach ($request->reserve_slot as $reserve_slot_id) {
             $plan = Plan::findOrFail($plan->id);
-            $room_id = Reserve_slot::FindOrFail($reserve_slot_id)->value('room_id');
+            $room_id = Reserve_slot::FindOrFail($reserve_slot_id)->room_id;
             $plan->planRoom()->syncWithoutDetaching($room_id);
         }
 
