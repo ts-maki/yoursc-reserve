@@ -11,6 +11,7 @@ class PlanController extends Controller
     public function index()
     {
         // TODO config('global.cache.time');が読み込めない
+        // dd(config('global.cache.time'));
         $plans = Cache::remember('plans', 5, function () {
             return Plan::with('images:plan_id,path')->select('id', 'title', 'description')->get();
         });
