@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\PlanEditController;
 use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
-use App\Http\Controllers\PlanDeleteController;
+use App\Http\Controllers\Admin\PlanDeleteController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
