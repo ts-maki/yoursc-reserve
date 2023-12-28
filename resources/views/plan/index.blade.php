@@ -15,6 +15,7 @@
                         <p class="card-text">{{ $plan->description }}</p>
                         <a href="{{ route('plan.show', $plan->id) }}" class="btn btn-outline-primary">詳細</a>
                     </div>
+                    {{ config('global.cache.time') }}
                 </div>
             </div>
             @empty
