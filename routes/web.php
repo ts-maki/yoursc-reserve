@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\InquiryController as AdminInquiryController;
-use App\Http\Controllers\Admin\PlanController;
-use App\Http\Controllers\Admin\PlanEditController;
+use App\Http\Controllers\Admin\PlanController as AdminPlanController;
+use App\Http\Controllers\Admin\PlanEditController as AdminPlanEditController;
 use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
-use App\Http\Controllers\Admin\PlanDeleteController;
+use App\Http\Controllers\Admin\PlanDeleteController as AdminPlanDeleteController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//宿泊者
 Route::get('/', function () {
     return view('top');
 })->name('top');
@@ -29,9 +31,8 @@ Route::get('/access', function () {
 Route::get('/room', function () {
     return view('room.index');
 })->name('room.index');
-Route::get('/stay', function () {
-    return view('plan.index');
-})->name('plan.index');
+Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
+Route::get('/plan/{id}', [PlanController::class, 'show'])->name('plan.show');
 Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');
 Route::post('inquiry/confirm', [InquiryController::class, 'comfilm'])->name('inquiry.comfilm');
 Route::post('inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
@@ -40,6 +41,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+//管理者
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -60,14 +62,14 @@ Route::middleware('auth')->group(function () {
     Route::put('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'update'])->name('admin.reserve_slot.update');
     Route::delete('admin/reserve-slot/delete/{id}', [ReserveSlotController::class, 'destroy'])->name('admin.reserve_slot.delete');
     //プラン
-    Route::get('admin/plan', [PlanController::class, 'index'])->name('admin.plan.index');
-    Route::get('admin/plan/create', [PlanController::class, 'create'])->name('admin.plan.create');
-    Route::post('admin/plan/create', [PlanController::class, 'store'])->name('admin.plan.store');
-    Route::get('admin/plan/edit/{id}', [PlanEditController::class, 'edit'])->name('admin.plan.edit');
-    Route::put('admin/plan/edit/{id}', [PlanEditController::class, 'update'])->name('admin.plan.update');
-    Route::delete('admin/plan/delete/image/{image_id}', [PlanEditController::class, 'destroyImage'])->name('admin.plan.image.delete');
-    Route::get('admin/plan/delete/{id}', [PlanDeleteController::class, 'check'])->name('admin.plan.check');
-    Route::delete('admin/plan/delete/{id}', [PlanDeleteController::class, 'destroy'])->name('admin.plan.delete');
+    Route::get('admin/plan', [AdminPlanController::class, 'index'])->name('admin.plan.index');
+    Route::get('admin/plan/create', [AdminPlanController::class, 'create'])->name('admin.plan.create');
+    Route::post('admin/plan/create', [AdminPlanController::class, 'store'])->name('admin.plan.store');
+    Route::get('admin/plan/edit/{id}', [AdminPlanEditController::class, 'edit'])->name('admin.plan.edit');
+    Route::put('admin/plan/edit/{id}', [AdminPlanEditController::class, 'update'])->name('admin.plan.update');
+    Route::delete('admin/plan/delete/image/{image_id}', [AdminPlanEditController::class, 'destroyImage'])->name('admin.plan.image.delete');
+    Route::get('admin/plan/delete/{id}', [AdminPlanDeleteController::class, 'check'])->name('admin.plan.check');
+    Route::delete('admin/plan/delete/{id}', [AdminPlanDeleteController::class, 'destroy'])->name('admin.plan.delete');
 });
 
 require __DIR__.'/auth.php';

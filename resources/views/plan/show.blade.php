@@ -1,8 +1,7 @@
 <x-layout>
     <x-container>
-        <h2 class="fs-2">宿泊プラン一覧</h2>
+        <h2 class="fs-2">{{ $plan->title }}プラン一覧</h2>
         <div class="row">
-            @forelse ($plans as $plan)
             <div class="col mt-4">
                 <div class="card" style="width: 18rem;">
                     @if (empty($plan->images[0]))
@@ -17,9 +16,6 @@
                     </div>
                 </div>
             </div>
-            @empty
-            <p>宿泊プランが登録されていません</p>
-            @endforelse
         </div>
     </x-container>
 </x-layout>
