@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Plan;
-use App\Models\Plan_reserve_slot;
 use App\Models\Reserve_slot;
 use Illuminate\Http\Request;
 
@@ -13,8 +12,6 @@ class PlanController extends Controller
 {
     public function index()
     {
-        // TODO imageはプランのリレーションから取ってくる
-        
         $plans = Plan::with('images')->get();
         return view('admin.plan.index')
             ->with('plans', $plans);
@@ -37,7 +34,6 @@ class PlanController extends Controller
             $file_name = $file->getClientOriginalName();
             $file_path = 'storage/images/'. $file_name;
 
-            //TODO 既にあるファイル名の場合はストレージに上書きされるのか？
             $path = $file->storeAs('images', $file_name, 'public');
             Image::create([
                 'plan_id' => $plan->id,
