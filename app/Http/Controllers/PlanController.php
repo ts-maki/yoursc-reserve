@@ -14,9 +14,7 @@ class PlanController extends Controller
         // dd(config('global.cache.time'));
         //画像のEagerロードと日付順に並び替えた関連先の予約枠を取得
         $plans = Cache::remember('plans', 1, function () {
-            return Plan::with(['images:plan_id,path', 'planReserveSlots.reserveSlot' => function($query) {
-                return $query->orderBy('date');
-            } ])->get();
+            return Plan::with(['images:plan_id,path', 'planReserveSlots.reserveSlot'])->get();
         });
 
         /* プラン一覧をプランに登録されている一番早い日付の予約枠の日付順に並び替える
