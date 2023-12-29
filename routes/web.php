@@ -32,7 +32,10 @@ Route::get('/room', function () {
     return view('room.index');
 })->name('room.index');
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
+Route::get('/plan/filter', [PlanController::class, 'filterPlansByDate'])->name('plan.filter');
 Route::get('/plan/{id}', [PlanController::class, 'show'])->name('plan.show');
+
+//お問い合わせ
 Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');
 Route::post('inquiry/confirm', [InquiryController::class, 'comfilm'])->name('inquiry.comfilm');
 Route::post('inquiry', [InquiryController::class, 'store'])->name('inquiry.store');

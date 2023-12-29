@@ -1,6 +1,23 @@
 <x-layout>
     <x-container>
         <h2 class="fs-2">宿泊プラン一覧</h2>
+        <div class="mt-2">
+            <form action="{{ route('plan.filter') }}" method="get">
+                <div class="plan__date">
+                    <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
+                        value="{{ now()->toDateString() }}"><span>～</span><input type="date" name="to" id=""
+                        min="{{ now()->toDateString() }}">
+                    <input type="submit" value="検索" class="btn btn-outline-primary">
+                </div>
+            </form>
+            <form action="{{ route('plan.filter') }}" method="get">
+                <div class="mt-2">
+                    <input type="submit"  value="今日" name="today" class="btn bg-primary text-white">
+                    <input type="submit" value="明日" name="tomorrow" class="btn btn-outline-primary">
+                </div>
+            </form>
+
+        </div>
         <div class="row">
             @forelse ($plans as $plan)
             <div class="col mt-4">
@@ -15,7 +32,6 @@
                         <p class="card-text">{{ $plan->description }}</p>
                         <a href="{{ route('plan.show', $plan->id) }}" class="btn btn-outline-primary">詳細</a>
                     </div>
-                    {{ config('global.cache.time') }}
                 </div>
             </div>
             @empty

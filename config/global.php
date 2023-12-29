@@ -2,7 +2,7 @@
 
 return [
     'cache' => [
-        'time' => 5,
+        'time' => 60,
     ],
 
 
