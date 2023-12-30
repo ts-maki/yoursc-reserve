@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\Reserve_slot;
 use App\Services\PlanService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Log;
 class PlanController extends Controller
 {
 
-    
-    public function __construct(public PlanService $planService) {
-        
+
+    public function __construct(public PlanService $planService)
+    {
     }
 
     public function index()
@@ -25,8 +26,8 @@ class PlanController extends Controller
         /* プラン一覧をプランに登録されている一番早い日付の予約枠の日付順に並び替える
         */
         $plans = $this->planService->sortByReserveDate($plans);
-
-        return view('plan.index')->with('plans', $plans);
+        return view('plan.index')->with('plans', $plans)
+            ->with('date', 'today');
     }
 
     public function show($plan_id)
@@ -43,40 +44,26 @@ class PlanController extends Controller
         // dd($request->all());
         $plans = $this->planService->getPlans();
 
-        //日付範囲選択
-        if (!empty($from) && !empty($to)) {
-            Log::debug('日付範囲検索');
-            $plans = $plans->filter(function ($plan) use ($from, $to) {
-                foreach ($plan->planReserveSlots as $slot) {
-                    $slots[] = $slot->reserveSlot->date;
-                }
-                $slots = collect($slots);
-                foreach ($slots as $index => $slot) {
-                    $is_date[] = $plan->planReserveSlots[$index]->whereBetween('date', [$from, $to]);
-                    dd($is_date);
-                }
-                dd($is_date);
-            });
-        }
 
         //今日の予約枠をもつプラン一覧
         if ($request->has('today')) {
 
             Log::debug('今日検索');
-            return view('plan.index')->with('plans', $plans);
+            return view('plan.index')->with('plans', $plans)->with('date', 'today');
         }
 
-        //今日の予約枠をもつプラン一覧
-        if ($request->has('tomorrow')) {
+        //明日の予約枠をもつプラン一覧
+        if ($request->has('tomorrow') || ($from == date("Y-m-d", strtotime("tomorrow")) && $to == date("Y-m-d", strtotime("tomorrow")))) {
+            // dd(date("Y-m-d",strtotime("tomorrow")));
             Log::debug('明日検索');
             $tomorrow = Carbon::tomorrow()->format('Y-m-d');
 
             //filterが関数なので$tomorrowはuseを使って参照する
-            $plans = $plans->filter(function ($plan) use($tomorrow) {
+            $plans = $plans->filter(function ($plan) use ($tomorrow) {
                 foreach ($plan->planReserveSlots as $slot) {
                     $slots[] = $slot->reserveSlot->date;
                 }
-                
+
                 //コレクションの関数が使えるようにコレクションにする
                 $slots = collect($slots);
                 $is_date = $slots->contains(function ($value) use ($tomorrow) {
@@ -91,8 +78,56 @@ class PlanController extends Controller
             });
 
             $plans = $this->planService->sortByReserveDate($plans);
-            return view('plan.index')->with('plans', $plans);
+            return view('plan.index')->with('plans', $plans)->with('date', 'tomorrow');
         };
+
+        //日付範囲選択
+        if (!empty($from) && !empty($to)) {
+
+            //日付検索で今日で検索した場合
+            if ($from == date('Y-m-d') && $to == date('Y-m-d')) {
+                Log::debug('今日検索');
+                return view('plan.index')->with('plans', $plans)->with('date', 'today');
+            }
+
+            Log::debug('日付範囲検索');
+            $plans = $plans->filter(function ($plan) use ($from, $to) {
+                foreach ($plan->planReserveSlots as $slot) {
+                    $slots[] = $slot->reserveSlot->date;
+                    $reserve_slot_ids[] = $slot->reserveSlot->id;
+                }
+                $slots = collect($slots);
+
+                //TODO plansからのリレーションのみでできないか検討
+                // foreach ($slots as $index => $slot) {
+                //     $is_date[] = $plan->planReserveSlots[$index]->whereBetween('date', [$from, $to]);
+                //     dd($is_date);
+                // }
+                // dd($is_date);
+
+                //planからのリレーションからこだわっていたが、予約枠テーブルからの手法を試みる
+                //プランに紐づくレコードを予約枠テーブルから抽出
+                $reserve_slots = Reserve_slot::whereIn('id', $reserve_slot_ids)->get();
+
+                $filter_plans = $reserve_slots->whereBetween('date', [$from, $to]);
+
+                //filterを使ったら真偽値判定しないと機能しない
+                //true=>プランが持つ予約枠の日付が日付検索範囲内
+                if (filled($filter_plans)) {
+                    Log::debug('!!!日付検索範囲内にある!!!=>' . '範囲' . $from . '～' . $to, ['プランID:' . $plan->id . ',', '予約枠ID:' . implode(',', $reserve_slot_ids)]);
+                    return $filter_plans;
+                } else {
+                    Log::debug('日付検索範囲内になし=>' . '範囲' . $from . '～' . $to);
+                    return $filter_plans = [];
+                }
+            });
+
+            return view('plan.index')->with('plans', $plans)
+                ->with('from', $from)
+                ->with('to', $to)
+                ->with('date', 'filter');
+        }
+
         // dd($plans);
         return view('plan.index')->with('plans', $plans);
     }

@@ -4,16 +4,45 @@
         <div class="mt-2">
             <form action="{{ route('plan.filter') }}" method="get">
                 <div class="plan__date">
+                    @switch($date)
+                    @case('today')
                     <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
-                        value="{{ now()->toDateString() }}"><span>～</span><input type="date" name="to" id=""
-                        min="{{ now()->toDateString() }}">
+                        value="{{ now()->toDateString() }}"><span>～</span>
+                    <input type="date" name="to" id="" min="{{ now()->toDateString() }}"
+                        value="{{ now()->toDateString() }}">
+                    @break
+                    @case('tomorrow')
+                    <input type="date" name="from" id="" min="{{ now()->toDateString() }}" value="{{ date("Y-m-d",strtotime("tomorrow")) }}"><span>～</span>
+                    <input type="date" name="to" id="" min="{{ now()->toDateString() }}" value="{{ date("Y-m-d",strtotime("tomorrow")) }}">
+                    @break
+                    @case('filter')
+                    <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
+                        value="{{ $from }}"><span>～</span>
+                    <input type="date" name="to" id="" min="{{ date(" Y-m-d",strtotime("tomorrow")) }}"
+                        value="{{ $to }}">
+                    @break
+                    @default
+                    @endswitch
                     <input type="submit" value="検索" class="btn btn-outline-primary">
                 </div>
             </form>
             <form action="{{ route('plan.filter') }}" method="get">
                 <div class="mt-2">
-                    <input type="submit"  value="今日" name="today" class="btn bg-primary text-white">
+                    @switch($date)
+                    @case('today')
+                    <input type="submit" value="今日" name="today" class="btn bg-primary text-white">
                     <input type="submit" value="明日" name="tomorrow" class="btn btn-outline-primary">
+                    @break
+                    @case('tomorrow')
+                    <input type="submit" value="今日" name="today" class="btn btn-outline-primary">
+                    <input type="submit" value="明日" name="tomorrow" class="btn bg-primary text-white">
+                    @break
+                    @case('filter')
+                    <input type="submit" value="今日" name="today" class="btn btn btn-outline-primary">
+                    <input type="submit" value="明日" name="tomorrow" class="btn btn-outline-primary">
+                    @break
+                    @default
+                    @endswitch
                 </div>
             </form>
 
