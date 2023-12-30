@@ -35,4 +35,15 @@ class Plan extends Model
     {
         return $this->hasMany(Plan_reserve_slot::class);
     }
+
+    public function sortByReserveDate($plans)
+    {
+        $plans = $plans->sortBy(function ($plan) {
+            return $plan->planReserveSlots->sortBy(function ($reserve_slot_date) {
+                return $reserve_slot_date->reserveSlot->date;
+            })->first()->reserveSlot->date;
+        });
+
+        return $plans;
+    }
 }
