@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\Admin\PlanDeleteController as AdminPlanDeleteController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\PlanDetailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,9 +32,12 @@ Route::get('/access', function () {
 Route::get('/room', function () {
     return view('room.index');
 })->name('room.index');
+
+//プラン
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
 Route::get('/plan/filter', [PlanController::class, 'filterPlansByDate'])->name('plan.filter');
-Route::get('/plan/{id}', [PlanController::class, 'show'])->name('plan.show');
+Route::get('/plan/{id}', [PlanDetailController::class, 'show'])->name('plan.show');
+Route::get('/events', [PlanDetailController::class, 'index']);
 
 //お問い合わせ
 Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');

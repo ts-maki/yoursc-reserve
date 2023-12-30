@@ -27,18 +27,6 @@
     <meta name="twitter:image:src" content="{{ asset('friends.png') }}" /> --}}
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css',])
     <title>{{ config('app.name', '宿泊予約サイト') }}</title>
-
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
-
-    </script>
 </head>
 
 <body>
