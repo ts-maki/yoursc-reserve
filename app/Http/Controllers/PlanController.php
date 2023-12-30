@@ -15,13 +15,13 @@ class PlanController extends Controller
 {
 
 
+
     public function __construct(public PlanService $planService)
     {
     }
 
     public function index()
     {
-
         $plans = $this->planService->getPlans();
         /* プラン一覧をプランに登録されている一番早い日付の予約枠の日付順に並び替える
         */
@@ -49,6 +49,7 @@ class PlanController extends Controller
         if ($request->has('today')) {
 
             Log::debug('今日検索');
+            $date = 'today';
             return view('plan.index')->with('plans', $plans)->with('date', 'today');
         }
 
@@ -66,6 +67,7 @@ class PlanController extends Controller
 
                 //コレクションの関数が使えるようにコレクションにする
                 $slots = collect($slots);
+
                 $is_date = $slots->contains(function ($value) use ($tomorrow) {
                     return $value == $tomorrow;
                 });
@@ -73,7 +75,7 @@ class PlanController extends Controller
                 if ($is_date !== false) {
                     return $plan;
                 } else {
-                    return $plan = [];
+                    return $plan = null;
                 }
             });
 
@@ -106,19 +108,19 @@ class PlanController extends Controller
                 // dd($is_date);
 
                 //planからのリレーションからこだわっていたが、予約枠テーブルからの手法を試みる
+
                 //プランに紐づくレコードを予約枠テーブルから抽出
                 $reserve_slots = Reserve_slot::whereIn('id', $reserve_slot_ids)->get();
 
                 $filter_plans = $reserve_slots->whereBetween('date', [$from, $to]);
 
-                //filterを使ったら真偽値判定しないと機能しない
-                //true=>プランが持つ予約枠の日付が日付検索範囲内
-                if (filled($filter_plans)) {
+                //日付検索範囲内の予約枠をもつプランをかえす
+                if (count($filter_plans) > 0) {
                     Log::debug('!!!日付検索範囲内にある!!!=>' . '範囲' . $from . '～' . $to, ['プランID:' . $plan->id . ',', '予約枠ID:' . implode(',', $reserve_slot_ids)]);
-                    return $filter_plans;
+                    return $plan;
                 } else {
                     Log::debug('日付検索範囲内になし=>' . '範囲' . $from . '～' . $to);
-                    return $filter_plans = [];
+                    return $plan = [];
                 }
             });
 
