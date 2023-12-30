@@ -21,10 +21,16 @@
     {{--
     <meta property="og:image" content="{{ asset('friends.png') }}" /> --}}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:description" content="みんなが投稿できる掲示板" />
+    <meta name="twitter:description" content="宿泊予約サイト" />
     {{-- TODO Twitter専用の記述です。シェアされた時に表示したい画像を絶対パスで設定 --}}
     {{--
     <meta name="twitter:image:src" content="{{ asset('friends.png') }}" /> --}}
+
+    {{-- 宿泊詳細でカレンダーのbootstrapのテーマを読み込む --}}
+    @if (!empty($calendar_theme_bootstrap))
+        {{ $calendar_theme_bootstrap }}
+    @endif
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css',])
     <title>{{ config('app.name', '宿泊予約サイト') }}</title>
 </head>

@@ -11,13 +11,14 @@ class PlanDetailController extends Controller
     public function show($plan_id)
     {
         $plan = Plan::findOrFail($plan_id);
-        return view('plan.show')->with('plan_id', $plan_id);
+        return view('plan.show')->with('plan', $plan);
 
     }
 
 
-    public function index()
+    public function index($plan_id)
     {
+        
         $events = [
             [
                 'title' => 'イベント 1',
