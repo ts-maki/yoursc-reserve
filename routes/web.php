@@ -36,7 +36,12 @@ Route::get('/room', function () {
 //プラン
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
 Route::get('/plan/filter', [PlanController::class, 'filterPlansByDate'])->name('plan.filter');
+
 Route::get('/plan/{id}', [PlanDetailController::class, 'show'])->name('plan.show');
+Route::get('/plan/{id}/jp-room', [PlanDetailController::class, 'show'])->name('plan.show.jp');
+Route::get('/plan/{id}/wes-room', [PlanDetailController::class, 'show'])->name('plan.show.wes');
+Route::get('/plan/{id}/mix-room', [PlanDetailController::class, 'show'])->name('plan.show.mix');
+Route::get('/plan/{id}/party-room', [PlanDetailController::class, 'show'])->name('plan.show.party');
 
 //カレンダーのエンドポイント
 Route::get('/events/{id}', [PlanDetailController::class, 'index']);

@@ -12,6 +12,36 @@
         </div>
         <p>{{ $plan->description }}</p>
         <div class="w-75">
+            <div class="flex">
+                <a href="{{ route('plan.show.jp', $plan->id) }}" class="btn
+                    @if (Str::contains(url()->current(), 'jp-room'))
+                    bg-primary text-white
+                    @else
+                    btn-outline-primary
+                    @endif
+                    ">和室</a>
+                <a href="{{ route('plan.show.wes', $plan->id) }}" class="btn
+                    @if (Str::contains(url()->current(), 'wes-room'))
+                    bg-primary text-white
+                    @else
+                    btn-outline-primary
+                    @endif
+                    ">洋室</a>
+                <a href="{{ route('plan.show.mix', $plan->id) }}" class="btn
+                    @if (Str::contains(url()->current(), 'mix-room'))
+                    bg-primary text-white
+                    @else
+                    btn-outline-primary
+                    @endif
+                    ">和洋室</a>
+                <a href="{{ route('plan.show.party', $plan->id) }}" class="btn
+                    @if (Str::contains(url()->current(), 'party-room'))
+                    bg-primary text-white
+                    @else
+                    btn-outline-primary
+                    @endif
+                    ">宴会会場</a>
+            </div>
             <div id='calendar'></div>
         </div>
     </x-container>
@@ -23,10 +53,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          locale: 'ja',
           themeSystem: 'bootstrap5',
           initialView: 'dayGridMonth',
           timeZone: 'Asia/Tokyo',
           events: `/events/${planId}`,
+         dateClick: function(info) {
+            console.log(location.href);
+            }
         });
         calendar.render();
       });
