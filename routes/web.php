@@ -37,6 +37,8 @@ Route::get('/room', function () {
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
 Route::get('/plan/filter', [PlanController::class, 'filterPlansByDate'])->name('plan.filter');
 Route::get('/plan/{id}', [PlanDetailController::class, 'show'])->name('plan.show');
+
+//カレンダーのエンドポイント
 Route::get('/events/{id}', [PlanDetailController::class, 'index']);
 
 //お問い合わせ

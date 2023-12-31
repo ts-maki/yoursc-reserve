@@ -1,8 +1,8 @@
 <x-layout>
-    <x-slot name="calendar_theme_bootstrap">
+    {{-- <x-slot name="calendar_theme_bootstrap">
         <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
         <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
-    </x-slot>
+    </x-slot> --}}
     <x-container>
         <h2 class="fs-2">{{ $plan->title }}</h2>
         <div class="d-flex">
@@ -17,7 +17,7 @@
     </x-container>
 </x-layout>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-<script src="../../resources/js/index.global.js"></script>
+{{-- <script src="../../resources/js/index.global.js"></script> --}}
 <script>
     let planId = {{ $plan->id }};
     document.addEventListener('DOMContentLoaded', function() {
