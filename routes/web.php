@@ -45,6 +45,10 @@ Route::get('/plan/{id}/party-room', [PlanDetailController::class, 'show'])->name
 
 //カレンダーのエンドポイント
 Route::get('/events/{id}', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/wes-room', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/jp-room', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/mix-room', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/party-room', [PlanDetailController::class, 'index']);
 
 //お問い合わせ
 Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');

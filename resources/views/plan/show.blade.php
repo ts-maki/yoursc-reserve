@@ -11,7 +11,7 @@
             @endforeach
         </div>
         <p>{{ $plan->description }}</p>
-        <div class="w-75">
+        <div class="w-50">
             <div class="flex">
                 @if ($is_jp_room)
                 <a href="{{ route('plan.show.jp', $plan->id) }}" class="btn
@@ -57,9 +57,24 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 {{-- <script src="../../resources/js/index.global.js"></script> --}}
 <script>
-    let url = location.href;
-    console.log(url);
     let planId = {{ $plan->id }};
+    let url = location.href;
+    //部屋タイプ切り替え用エンドポイントURL
+    if (url.includes('jp-room')) {
+        url = `/jp-room`
+    } else if (url.includes('wes-room')) {
+        url = `/wes-room`
+    } else if (url.includes('mix-room')) {
+        url = `/mix-room`
+    } else if (url.includes('party-room')) {
+        url = `/party-room`
+    } else  {
+        url = ''
+    }
+    let requestUrl = `/events/${planId}${url}`
+    console.log(location.href);
+    console.log(requestUrl);
+    
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -67,10 +82,7 @@
           themeSystem: 'bootstrap5',
           initialView: 'dayGridMonth',
           timeZone: 'Asia/Tokyo',
-        //   if (condition) {
-            
-        //   }
-          events: `/events/${planId}`,
+          events: requestUrl,
          dateClick: function(info) {
             console.log(location.href);
             }
