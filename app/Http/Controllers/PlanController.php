@@ -27,7 +27,7 @@ class PlanController extends Controller
         */
         $plans = $this->planService->sortByReserveDate($plans);
         return view('plan.index')->with('plans', $plans)
-            ->with('date', 'today');
+            ->with('date', 'default');
     }
 
     public function show($plan_id)
@@ -46,20 +46,42 @@ class PlanController extends Controller
 
 
         //今日の予約枠をもつプラン一覧
-        if ($request->has('today')) {
+        if ($request->has('today') || ($from == date("Y-m-d") && $to == date("Y-m-d"))) {
+            // dd(date("Y-m-d",strtotime("tomorrow")));
 
-            Log::debug('今日検索');
-            $date = 'today';
+            Log::debug('今日');
+            $today = date("Y-m-d");
+
+            //filterで今日の予約枠をもつプランを返す
+            $plans = $plans->filter(function ($plan) use ($today) {
+                foreach ($plan->planReserveSlots as $slot) {
+                    $slots[] = $slot->reserveSlot->date;
+                }
+
+                //コレクションの関数が使えるようにコレクションにする
+                $slots = collect($slots);
+
+                $is_date = $slots->contains(function ($value) use ($today) {
+                    return $value == $today;
+                });
+
+                if ($is_date !== false) {
+                    return $plan;
+                } else {
+                    return $plan = null;
+                }
+            });
+
+            $plans = $this->planService->sortByReserveDate($plans);
             return view('plan.index')->with('plans', $plans)->with('date', 'today');
-        }
+        };
+
 
         //明日の予約枠をもつプラン一覧
         if ($request->has('tomorrow') || ($from == date("Y-m-d", strtotime("tomorrow")) && $to == date("Y-m-d", strtotime("tomorrow")))) {
-            // dd(date("Y-m-d",strtotime("tomorrow")));
             Log::debug('明日検索');
             $tomorrow = Carbon::tomorrow()->format('Y-m-d');
 
-            //filterが関数なので$tomorrowはuseを使って参照する
             $plans = $plans->filter(function ($plan) use ($tomorrow) {
                 foreach ($plan->planReserveSlots as $slot) {
                     $slots[] = $slot->reserveSlot->date;
@@ -85,12 +107,6 @@ class PlanController extends Controller
 
         //日付範囲選択
         if (!empty($from) && !empty($to)) {
-
-            //日付検索で今日で検索した場合
-            if ($from == date('Y-m-d') && $to == date('Y-m-d')) {
-                Log::debug('今日検索');
-                return view('plan.index')->with('plans', $plans)->with('date', 'today');
-            }
 
             Log::debug('日付範囲検索');
             $plans = $plans->filter(function ($plan) use ($from, $to) {

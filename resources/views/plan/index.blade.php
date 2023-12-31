@@ -5,6 +5,12 @@
             <form action="{{ route('plan.filter') }}" method="get">
                 <div class="plan__date">
                     @switch($date)
+                    @case('default')
+                    <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
+                        value="{{ now()->toDateString() }}"><span>～</span>
+                    <input type="date" name="to" id="" min="{{ now()->toDateString() }}"
+                        value="">
+                    @break
                     @case('today')
                     <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
                         value="{{ now()->toDateString() }}"><span>～</span>
@@ -29,6 +35,10 @@
             <form action="{{ route('plan.filter') }}" method="get">
                 <div class="mt-2">
                     @switch($date)
+                    @case('default')
+                    <input type="submit" value="今日" name="today" class="btn btn-outline-primary">
+                    <input type="submit" value="明日" name="tomorrow" class="btn btn-outline-primary">
+                    @break
                     @case('today')
                     <input type="submit" value="今日" name="today" class="btn bg-primary text-white">
                     <input type="submit" value="明日" name="tomorrow" class="btn btn-outline-primary">
