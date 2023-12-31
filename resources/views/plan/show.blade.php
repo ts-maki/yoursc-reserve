@@ -13,6 +13,7 @@
         <p>{{ $plan->description }}</p>
         <div class="w-75">
             <div class="flex">
+                @if ($is_jp_room)
                 <a href="{{ route('plan.show.jp', $plan->id) }}" class="btn
                     @if (Str::contains(url()->current(), 'jp-room'))
                     bg-primary text-white
@@ -20,6 +21,8 @@
                     btn-outline-primary
                     @endif
                     ">和室</a>
+                @endif
+                @if ($is_wes_room)
                 <a href="{{ route('plan.show.wes', $plan->id) }}" class="btn
                     @if (Str::contains(url()->current(), 'wes-room'))
                     bg-primary text-white
@@ -27,6 +30,8 @@
                     btn-outline-primary
                     @endif
                     ">洋室</a>
+                @endif
+                @if ($is_mix_room)
                 <a href="{{ route('plan.show.mix', $plan->id) }}" class="btn
                     @if (Str::contains(url()->current(), 'mix-room'))
                     bg-primary text-white
@@ -34,6 +39,8 @@
                     btn-outline-primary
                     @endif
                     ">和洋室</a>
+                @endif
+                @if ($is_party_room)
                 <a href="{{ route('plan.show.party', $plan->id) }}" class="btn
                     @if (Str::contains(url()->current(), 'party-room'))
                     bg-primary text-white
@@ -41,6 +48,7 @@
                     btn-outline-primary
                     @endif
                     ">宴会会場</a>
+                @endif
             </div>
             <div id='calendar'></div>
         </div>
@@ -49,6 +57,8 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 {{-- <script src="../../resources/js/index.global.js"></script> --}}
 <script>
+    let url = location.href;
+    console.log(url);
     let planId = {{ $plan->id }};
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -57,6 +67,9 @@
           themeSystem: 'bootstrap5',
           initialView: 'dayGridMonth',
           timeZone: 'Asia/Tokyo',
+        //   if (condition) {
+            
+        //   }
           events: `/events/${planId}`,
          dateClick: function(info) {
             console.log(location.href);
