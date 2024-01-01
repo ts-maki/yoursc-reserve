@@ -33,7 +33,7 @@
                 @csrf
             <input type="submit" value="予約する" class="btn btn-outline-primary">
             </form>
-            {{-- <div><a href="{{ route('reser') }}"></a></div> --}}
+            <div class="mt-2 btn btn-outline-primary"><a href="{{ route('reserve.create', ['id' => $plan_reserve['plan_id'], 'reserve_slot_id' => $plan_reserve['reserve_slot_id']]) }}">入力画面に戻る</a></div>
         </form>
         </div>
     </x-container>
