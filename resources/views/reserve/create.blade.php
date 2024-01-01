@@ -18,6 +18,7 @@ $session_reserve = session('plan_reserve');
             <div class="">
                 <p>予約日:{{ $plan_reserve->reserveSlot->date }}</p>
                 <p>料金:{{ $plan_reserve->fee }}円</p>
+                <p>部屋タイプ:{{ $plan_reserve->reserveSlot->room->name }}</p>
             </div>
             <form action="{{ route('reserve.comfilm') }}" method="post">
                 @csrf
