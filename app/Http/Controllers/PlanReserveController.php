@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Reserve\NewReserve;
 use App\Models\Plan;
 use App\Models\Plan_reserve_slot;
 use App\Models\Reserve;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class PlanReserveController extends Controller
 {
@@ -27,7 +29,7 @@ class PlanReserveController extends Controller
 
         //予約重複確認変数を全て含む予約があるか
         $is_overlap_reserve = Reserve::where('plan_id', $plan_id)->where('reserve_slot_id', $slot_id)->where('telephone_number', $tel)->exists();
-        
+
         Log::debug('予約確認時重複予約あるか', [$is_overlap_reserve]);
 
         $plan_reserve = session('plan_reserve');
@@ -40,7 +42,7 @@ class PlanReserveController extends Controller
         Log::debug('予約確認時重複予約あるか', [session('is_overlap_reserve')]);
 
         $session_reserve = session('plan_reserve');
-        Reserve::create([
+        $reserve = Reserve::create([
             'plan_id' =>  $session_reserve['plan_id'],
             'reserve_slot_id' => $session_reserve['reserve_slot_id'],
             'first_name' => $session_reserve['first_name'],
@@ -51,6 +53,9 @@ class PlanReserveController extends Controller
             'message' => $session_reserve['message'],
             'address' => $session_reserve['address'],
         ]);
+
+        $reserve = Reserve::findOrFail($reserve->id);
+        Mail::to($reserve->email)->send(new NewReserve($reserve));
         Log::debug('セッションあるか', [session('plan_reserve')]);
         session()->forget('plan_reserve');
         Log::debug('セッションあるか', [session('plan_reserve')]);
