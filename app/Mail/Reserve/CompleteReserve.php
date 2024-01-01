@@ -2,6 +2,7 @@
 
 namespace App\Mail\Reserve;
 
+use App\Models\Reserve;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,7 +17,7 @@ class CompleteReserve extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public Reserve $reserve)
     {
         //
     }
@@ -27,7 +28,7 @@ class CompleteReserve extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Complete Reserve',
+            subject: '宿泊予約完了',
         );
     }
 

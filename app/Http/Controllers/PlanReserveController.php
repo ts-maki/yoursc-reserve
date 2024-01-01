@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Reserve\CompleteReserve;
 use App\Mail\Reserve\NewReserve;
 use App\Models\Plan;
 use App\Models\Plan_reserve_slot;
@@ -55,7 +56,8 @@ class PlanReserveController extends Controller
         ]);
 
         $reserve = Reserve::findOrFail($reserve->id);
-        Mail::to($reserve->email)->send(new NewReserve($reserve));
+        Mail::to($reserve->email)->send(new CompleteReserve($reserve));
+        Mail::to('reserve-admin@example.com')->send(new NewReserve($reserve));
         Log::debug('セッションあるか', [session('plan_reserve')]);
         session()->forget('plan_reserve');
         Log::debug('セッションあるか', [session('plan_reserve')]);
