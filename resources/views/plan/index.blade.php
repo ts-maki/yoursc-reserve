@@ -9,7 +9,7 @@
                     <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
                         value="{{ now()->toDateString() }}"><span>～</span>
                     <input type="date" name="to" id="" min="{{ now()->toDateString() }}"
-                        value="">
+                        value="{{ now()->toDateString() }}">
                     @break
                     @case('today')
                     <input type="date" name="from" id="" min="{{ now()->toDateString() }}"
