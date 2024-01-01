@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\Admin\PlanDeleteController as AdminPlanDeleteController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\PlanDetailController;
+use App\Http\Controllers\PlanReserveController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,9 +33,29 @@ Route::get('/access', function () {
 Route::get('/room', function () {
     return view('room.index');
 })->name('room.index');
+
+//プラン
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
 Route::get('/plan/filter', [PlanController::class, 'filterPlansByDate'])->name('plan.filter');
-Route::get('/plan/{id}', [PlanController::class, 'show'])->name('plan.show');
+
+Route::get('/plan/{id}', [PlanDetailController::class, 'show'])->name('plan.show');
+Route::get('/plan/{id}/jp-room', [PlanDetailController::class, 'show'])->name('plan.show.jp');
+Route::get('/plan/{id}/wes-room', [PlanDetailController::class, 'show'])->name('plan.show.wes');
+Route::get('/plan/{id}/mix-room', [PlanDetailController::class, 'show'])->name('plan.show.mix');
+Route::get('/plan/{id}/party-room', [PlanDetailController::class, 'show'])->name('plan.show.party');
+
+//宿泊予約
+Route::get('/plan/{id}/reserve/{reserve_slot_id}', [PlanReserveController::class, 'create'])->name('reserve.create');
+Route::post('/plan/reserve/comfilm', [PlanReserveController::class, 'comfilm'])->name('reserve.comfilm');
+Route::post('/plan/reserve', [PlanReserveController::class, 'store'])->name('reserve.store');
+Route::get('/plan/reserve/complete', [PlanReserveController::class, 'showComplete'])->name('reserve.complete');
+
+//カレンダーのエンドポイント
+Route::get('/events/{id}', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/wes-room', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/jp-room', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/mix-room', [PlanDetailController::class, 'index']);
+Route::get('/events/{id}/party-room', [PlanDetailController::class, 'index']);
 
 //お問い合わせ
 Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');

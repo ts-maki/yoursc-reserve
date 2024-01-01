@@ -17,3 +17,7 @@
     display: inline-block;
     transform: translateX(-20px);
 } */
+
+:root {
+    --fc-button-bg-color: #3cb371;
+  }
