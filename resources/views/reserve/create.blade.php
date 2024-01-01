@@ -1,11 +1,13 @@
 <x-layout>
     <x-container>
         <div>
-            @if (!empty($plan_reserve->plan->images[0]))
-            @foreach ($plan_reserve->plan->images as $image)
-                <img src="{{ asset($image->path) }}" alt="{{ $plan_reserve->plan->title }}プランの画像">
-            @endforeach
-            @endif
+           <div class="row">
+                @if (!empty($plan_reserve->plan->images[0]))
+                @foreach ($plan_reserve->plan->images as $image)
+                    <img src="{{ asset($image->path) }}" alt="{{ $plan_reserve->plan->title }}プランの画像" class="w-50" class="col">
+                @endforeach
+                @endif
+           </div>
             <h4 class="fs-4">{{ $plan_reserve->plan->title }}</h4>
             <div class="d-flex">
                 <p>予約日:{{ $plan_reserve->reserveSlot->date }}</p>
