@@ -61,7 +61,6 @@ class PlanDetailController extends Controller
         $reserve_slots = Reserve_slot::with('room')->whereIn('id', $plan_reserve_slots_ids)->orderBy('id')->get();
 
         if (url()->current() == env('APP_URL'). '/events/'. $plan_id) {
-            // dd(env('APP_URL'). '/'. $plan_id);
             $room = 'all';
 
             $plan_reserve_slots = Plan_reserve_slot::where('plan_id', $plan_id)->select('reserve_slot_id', 'fee');

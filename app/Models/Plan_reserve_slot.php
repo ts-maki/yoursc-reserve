@@ -14,4 +14,9 @@ class Plan_reserve_slot extends Model
     {
         return $this->belongsTo(Reserve_slot::class);
     }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
 }

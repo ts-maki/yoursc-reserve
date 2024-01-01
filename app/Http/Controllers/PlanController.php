@@ -64,7 +64,6 @@ class PlanController extends Controller
                 $is_date = $slots->contains(function ($value) use ($today) {
                     return $value == $today;
                 });
-
                 if ($is_date !== false) {
                     return $plan;
                 } else {

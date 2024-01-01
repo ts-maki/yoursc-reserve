@@ -8,6 +8,7 @@ use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\Admin\PlanDeleteController as AdminPlanDeleteController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PlanDetailController;
+use App\Http\Controllers\PlanReserveController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,12 @@ Route::get('/plan/{id}/jp-room', [PlanDetailController::class, 'show'])->name('p
 Route::get('/plan/{id}/wes-room', [PlanDetailController::class, 'show'])->name('plan.show.wes');
 Route::get('/plan/{id}/mix-room', [PlanDetailController::class, 'show'])->name('plan.show.mix');
 Route::get('/plan/{id}/party-room', [PlanDetailController::class, 'show'])->name('plan.show.party');
+
+//宿泊予約
+Route::get('/plan/{id}/reserve/{reserve_slot_id}', [PlanReserveController::class, 'create'])->name('reserve.create');
+Route::post('/plan/reserve/comfilm', [PlanReserveController::class, 'comfilm'])->name('reserve.comfilm');
+Route::post('/plan/reserve', [PlanReserveController::class, 'store'])->name('reserve.store');
+Route::get('/plan/reserve/complete', [PlanReserveController::class, 'showComplete'])->name('reserve.complete');
 
 //カレンダーのエンドポイント
 Route::get('/events/{id}', [PlanDetailController::class, 'index']);
