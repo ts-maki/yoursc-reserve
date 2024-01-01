@@ -45,6 +45,6 @@ class PlanReserveController extends Controller
 
     public function showComplete()
     {
-        
+        return view('reserve.complete');
     }
 }
