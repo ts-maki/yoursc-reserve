@@ -33,6 +33,7 @@
                 @csrf
             <input type="submit" value="予約する" class="btn btn-outline-primary">
             </form>
+            {{-- <div><a href="{{ route('reser') }}"></a></div> --}}
         </form>
         </div>
     </x-container>
