@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\PlanEditController as AdminPlanEditController;
 use App\Http\Controllers\Admin\ReserveSlotController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\Admin\PlanDeleteController as AdminPlanDeleteController;
+use App\Http\Controllers\Admin\ReserveController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PlanDetailController;
 use App\Http\Controllers\PlanReserveController;
@@ -86,6 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'edit'])->name('admin.reserve_slot.edit');
     Route::put('admin/reserve-slot/edit/{id}', [ReserveSlotController::class, 'update'])->name('admin.reserve_slot.update');
     Route::delete('admin/reserve-slot/delete/{id}', [ReserveSlotController::class, 'destroy'])->name('admin.reserve_slot.delete');
+
     //プラン
     Route::get('admin/plan', [AdminPlanController::class, 'index'])->name('admin.plan.index');
     Route::get('admin/plan/create', [AdminPlanController::class, 'create'])->name('admin.plan.create');
@@ -95,6 +97,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('admin/plan/delete/image/{image_id}', [AdminPlanEditController::class, 'destroyImage'])->name('admin.plan.image.delete');
     Route::get('admin/plan/delete/{id}', [AdminPlanDeleteController::class, 'check'])->name('admin.plan.check');
     Route::delete('admin/plan/delete/{id}', [AdminPlanDeleteController::class, 'destroy'])->name('admin.plan.delete');
+
+    //予約
+    Route::get('admin/reserve', [ReserveController::class, 'index'])->name('admin.reserve.index');
+    Route::get('admin/reserve/{reserve_id}', [ReserveController::class, 'show'])->name('admin.reserve.show');
+    //reserve/filterだと上のreserve/{reserve_id}が優先される。{}が任意のパラメーターを受け付けるから
+    Route::get('admin/reserve/filter/date', [ReserveController::class, 'filterDateByDate'])->name('admin.reserve.filter');
+    Route::get('admin/reserve/filter/today', [ReserveController::class, 'filterDateByToday'])->name('admin.reserve.filter.today');
+    Route::get('admin/reserve/filter/tomorrow', [ReserveController::class, 'filterDateByTomorrow'])->name('admin.reserve.filter.tomorrow');
+    Route::put('admin/reserve/{reserve_id}', [ReserveController::class, 'update'])->name('admin.reserve.update');
+    Route::delete('admin/reserve/{reserve_id}', [ReserveController::class, 'destroy'])->name('admin.reserve.delete');
+
 });
 
 require __DIR__.'/auth.php';

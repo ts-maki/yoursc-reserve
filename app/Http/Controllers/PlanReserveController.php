@@ -7,6 +7,7 @@ use App\Mail\Reserve\NewReserve;
 use App\Models\Plan;
 use App\Models\Plan_reserve_slot;
 use App\Models\Reserve;
+use App\Models\Reserve_slot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -16,7 +17,12 @@ class PlanReserveController extends Controller
     public function create($plan_id, $reserve_slot_id)
     {
         $plan_reserve = Plan_reserve_slot::with('plan.images:plan_id,path')->where('plan_id', $plan_id)->where('reserve_slot_id', $reserve_slot_id)->first();
-        return view('reserve.create')->with('plan_reserve', $plan_reserve);
+
+        //予約枠の部屋の数
+        $reserve_slot_number_of_rooms = Reserve_slot::findOrFail($reserve_slot_id)->number_of_rooms;
+        return view('reserve.create')
+            ->with('plan_reserve', $plan_reserve)
+            ->with('reserve_slot_number_of_rooms', $reserve_slot_number_of_rooms);
     }
 
     public function comfilm(Request $request)
@@ -58,6 +64,12 @@ class PlanReserveController extends Controller
         $reserve = Reserve::findOrFail($reserve->id);
         Mail::to($reserve->email)->send(new CompleteReserve($reserve));
         Mail::to('reserve-admin@example.com')->send(new NewReserve($reserve));
+
+        //予約で使用した予約枠の部屋の数を1減らす
+        $reserve_slot = Reserve_slot::findOrFail($reserve->reserve_slot_id);
+        $reserve_slot->number_of_rooms -= 1;
+        $reserve_slot->save();
+
         Log::debug('セッションあるか', [session('plan_reserve')]);
         session()->forget('plan_reserve');
         Log::debug('セッションあるか', [session('plan_reserve')]);

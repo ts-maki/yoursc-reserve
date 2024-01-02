@@ -16,22 +16,21 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- {{ dd($reserve_slots) }} --}}
                 @foreach ($reserve_slots as $index => $reserve_slot)
                 <tr>
-                    <th>{{ $index + 1 }}</th>
-                    <th>{{ $reserve_slot->room->name }}</th>
-                    <th>{{ $reserve_slot->date }}</th>
-                    <th>{{ $reserve_slot->number_of_rooms }}</th>
-                    <th><a href="{{ route('admin.reserve_slot.edit', $reserve_slot->id) }}"
-                            class="btn btn-outline-primary">編集</a></th>
-                    <th>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $reserve_slot->room->name }}</td>
+                    <td>{{ $reserve_slot->date }}</td>
+                    <td>{{ $reserve_slot->number_of_rooms }}</td>
+                    <td><a href="{{ route('admin.reserve_slot.edit', $reserve_slot->id) }}"
+                            class="btn btn-outline-primary">編集</a></td>
+                    <td>
                         <form action="{{ route('admin.reserve_slot.delete', $reserve_slot) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="削除" class="btn btn-outline-danger">
                         </form>
-                    </th>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

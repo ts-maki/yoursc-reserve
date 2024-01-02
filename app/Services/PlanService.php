@@ -29,6 +29,19 @@ readonly class PlanService
         return $plans;
     }
 
+    //空室状況表示関数
+    public function getRoomStatus($number_of_reserve_slot)
+    {
+        if ($number_of_reserve_slot > 2) {
+            return '〇';
+        } else if ($number_of_reserve_slot == 0) {
+            return '×';
+        } else {
+            return '△';
+        }
+    }
+
+    //フルカレンダーのevents作成
     public function getEventsByRoom($plan_reserve_slots, $room, $plan_id)
     {
 
@@ -103,9 +116,12 @@ readonly class PlanService
 
         if (!empty($reserve_slots)) {
 
+            
             foreach ($reserve_slots as $index => $reserve_slot) {
+                $reserve_status = $this->getRoomStatus($reserve_slot->number_of_rooms);
+
                 $events[$index]['id'] = $reserve_slot->id;
-                $events[$index]['title'] = $reserve_slot->room->name . ' ' . Number::format($plan_fees[$index]) . '円';
+                $events[$index]['title'] = $reserve_status. ' '. $reserve_slot->room->name . ' ' . Number::format($plan_fees[$index]) . '円';
                 $events[$index]['start'] = $reserve_slot->date;
                 switch ($reserve_slot->room->id) {
                     case 1:

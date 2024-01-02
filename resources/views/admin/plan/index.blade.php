@@ -17,22 +17,22 @@
             </thead>
                 @forelse ($plans as $index => $plan)
                 <tr>
-                    <th>{{ $index + 1 }}</th>
-                    <th>
+                    <td>{{ $index + 1 }}</td>
+                    <td>
                         @if (empty($plan->images[0]))
                         <p>画像なし</p>
                         @else
                         <img src="{{ asset($plan->images[0]->path) }}" alt="" width="100">
                         @endif
-                    </th>
-                    <th>{{ $plan->title }}</th>
-                    <th>{{ $plan->description }}</th>
-                    <th><a href="{{ route('admin.plan.edit', $plan->id) }}" class="btn btn-outline-primary">編集</a></th>
-                    <th>
+                    </td>
+                    <td>{{ $plan->title }}</td>
+                    <td>{{ $plan->description }}</td>
+                    <td><a href="{{ route('admin.plan.edit', $plan->id) }}" class="btn btn-outline-primary">編集</a></td>
+                    <td>
                         <a href="{{ route('admin.plan.check', $plan->id) }}" class="btn btn-outline-danger">削除</a>
-                    </th>
-                    <th>
-                    </th>
+                    </td>
+                    <td>
+                    </td>
                 </tr>
                 @empty
                 <p>宿泊プランがありません</p>

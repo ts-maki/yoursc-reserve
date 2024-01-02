@@ -6,6 +6,9 @@ $session_reserve = session('plan_reserve');
 <x-layout>
     <x-container>
         <div>
+            @if ($reserve_slot_number_of_rooms === 0)
+                <h3 class="fs-3 text-danger">満室のため予約できません</h3>
+            @endif
             <div class="row">
                 @if (!empty($plan_reserve->plan->images[0]))
                 @foreach ($plan_reserve->plan->images as $image)
@@ -22,11 +25,11 @@ $session_reserve = session('plan_reserve');
             </div>
             <form action="{{ route('reserve.comfilm') }}" method="post">
                 @csrf
-                {{-- 画面に表示しない確認画面やDBに必要な情報をheddenでわたす --}}
                 <input type="hidden" name="plan_id" value="{{ $session_reserve['plan_id'] ?? $plan_reserve->plan->id }}">
-                <input type="hidden" name="reserve_slot_id" value="{{ $session_reserve['reserve_slot_id'] ??$plan_reserve->reserve_slot_id }}">
+                <input type="hidden" name="reserve_slot_id" value="{{ $session_reserve['reserve_slot_id'] ?? $plan_reserve->reserve_slot_id }}">
                 <input type="hidden" name="title" value="{{ $session_reserve['title'] ?? $plan_reserve->plan->title }}">
                 <input type="hidden" name="date" value="{{ $session_reserve['date'] ?? $plan_reserve->reserveSlot->date }}">
+                @if ($reserve_slot_number_of_rooms > 0)
                 <div>
                     <label for="first_name">姓</label>
                     <input type="text" name="first_name" id="first_name" value="{{ $session_reserve['first_name'] ?? '' }}">
@@ -52,7 +55,11 @@ $session_reserve = session('plan_reserve');
                     <div><textarea name="message" id="" cols="90" rows="10" id="message">{{ $session_reserve['message'] ?? '' }}</textarea></div>
                 </div>
                 <input type="submit" value="入力内容の確認" class="btn btn-outline-primary">
+                @endif
             </form>
+            <div class="btn btn-outline-info mt-2">
+                <a href="{{ route('plan.show', $plan_reserve->plan->id) }}">プラン詳細に戻る</a>
+            </div>
         </div>
     </x-container>
 </x-layout>
