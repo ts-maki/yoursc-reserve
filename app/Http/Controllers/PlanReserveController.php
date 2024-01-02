@@ -7,6 +7,7 @@ use App\Mail\Reserve\NewReserve;
 use App\Models\Plan;
 use App\Models\Plan_reserve_slot;
 use App\Models\Reserve;
+use App\Models\Reserve_slot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -58,6 +59,12 @@ class PlanReserveController extends Controller
         $reserve = Reserve::findOrFail($reserve->id);
         Mail::to($reserve->email)->send(new CompleteReserve($reserve));
         Mail::to('reserve-admin@example.com')->send(new NewReserve($reserve));
+
+        //予約で使用した予約枠の部屋の数を1減らす
+        $reserve_slot = Reserve_slot::findOrFail($reserve->reserve_slot_id);
+        $reserve_slot->number_of_rooms -= 1;
+        $reserve_slot->save();
+
         Log::debug('セッションあるか', [session('plan_reserve')]);
         session()->forget('plan_reserve');
         Log::debug('セッションあるか', [session('plan_reserve')]);

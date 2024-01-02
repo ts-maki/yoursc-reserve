@@ -18,13 +18,18 @@ class ReserveController extends Controller
             return $reserve->reserveSlot->date;
         });
 
-        //一番遅い予約日取得
-        $last_reserve_id = $reserves->last()->id;
-        $last_reserve_date = $reserves->firstWhere('id', $last_reserve_id)->reserveSlot->date;
+        if (count($reserves) > 0) {
+            //予約日順で並んでいる予約の最後の予約日を取得する
+            $last_reserve_id = $reserves->last()->id;
+            $last_reserve_date = $reserves->firstWhere('id', $last_reserve_id)->reserveSlot->date;
 
-        return view('admin.reserve.index')
+            return view('admin.reserve.index')
             ->with('reserves', $reserves)
             ->with('last_reserve_date', $last_reserve_date);
+        }
+
+        return view('admin.reserve.index')
+            ->with('reserves', $reserves);
     }
 
     public function show($reserve_id)
@@ -44,6 +49,13 @@ class ReserveController extends Controller
     public function destroy($reserve_id)
     {
         $reserve = Reserve::findOrFail($reserve_id);
+
+        //キャンセルした予約の予約枠の部屋の数を1増やす
+        $reserve_slot = Reserve_slot::findOrFail($reserve->reserve_slot_id);
+        $reserve_slot->number_of_rooms += 1;
+        $reserve_slot->save();
+
+        //予約キャンセルメール
         Mail::to($reserve->email)->send(new CancelReserve($reserve));
         $reserve->delete();
 
