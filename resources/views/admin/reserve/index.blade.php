@@ -11,14 +11,14 @@
             </form>
             <div class="mt-2">
                 <a href="{{ route('admin.reserve.filter.today') }}" class="btn 
-                @if (strpos(url()->current(), 'today') !== false)
+                @if (Str::afterLast(url()->current(), '/') === 'today')
                 btn-primary
                 @else
                 btn-outline-primary
                 @endif
                 ">今日</a>
                 <a href="{{ route('admin.reserve.filter.tomorrow') }}" class="btn 
-                @if (strpos(url()->current(), 'tomorrow') !== false)
+                @if (Str::afterLast(url()->current(), '/') === 'tomorrow')
                 btn-primary
                 @else
                 btn-outline-primary
