@@ -46,11 +46,11 @@ class PlanController extends Controller
 
 
         //今日の予約枠をもつプラン一覧
-        if ($request->has('today') || ($from == date("Y-m-d") && $to == date("Y-m-d"))) {
-            // dd(date("Y-m-d",strtotime("tomorrow")));
+        if ($request->has('today') || ($from == date('Y-m-d') && $to == date('Y-m-d'))) {
+            // dd(date('Y-m-d',strtotime("tomorrow")));
 
             Log::debug('今日');
-            $today = date("Y-m-d");
+            $today = date('Y-m-d');
 
             //filterで今日の予約枠をもつプランを返す
             $plans = $plans->filter(function ($plan) use ($today) {
@@ -77,7 +77,7 @@ class PlanController extends Controller
 
 
         //明日の予約枠をもつプラン一覧
-        if ($request->has('tomorrow') || ($from == date("Y-m-d", strtotime("tomorrow")) && $to == date("Y-m-d", strtotime("tomorrow")))) {
+        if ($request->has('tomorrow') || ($from == date('Y-m-d', strtotime("tomorrow")) && $to == date('Y-m-d', strtotime("tomorrow")))) {
             Log::debug('明日検索');
             $tomorrow = Carbon::tomorrow()->format('Y-m-d');
 
@@ -127,6 +127,7 @@ class PlanController extends Controller
                 //プランに紐づくレコードを予約枠テーブルから抽出
                 $reserve_slots = Reserve_slot::whereIn('id', $reserve_slot_ids)->get();
 
+                //プランに紐づく予約枠のレコードから日付検索範囲内のレコードを取得
                 $filter_plans = $reserve_slots->whereBetween('date', [$from, $to]);
 
                 //日付検索範囲内の予約枠をもつプランをかえす
@@ -145,7 +146,6 @@ class PlanController extends Controller
                 ->with('date', 'filter');
         }
 
-        // dd($plans);
         return view('plan.index')->with('plans', $plans);
     }
 }
