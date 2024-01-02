@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function () {
     //予約
     Route::get('admin/reserve', [ReserveController::class, 'index'])->name('admin.reserve.index');
     Route::get('admin/reserve/{reserve_id}', [ReserveController::class, 'show'])->name('admin.reserve.show');
+    Route::put('admin/reserve/{reserve_id}', [ReserveController::class, 'update'])->name('admin.reserve.update');
     Route::delete('admin/reserve/{reserve_id}', [ReserveController::class, 'destroy'])->name('admin.reserve.delete');
 
 

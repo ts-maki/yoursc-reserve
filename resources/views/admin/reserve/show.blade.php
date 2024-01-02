@@ -34,11 +34,29 @@
                 <p>メッセージ</p>
                 <p class="border p-2 rounded">{{ $reserve->message }}</p>
             </div>
-            <form action="{{ route('admin.reserve.delete', $reserve->id) }}" method="post">
-            @csrf
-            @method('DELETE')
-            <input type="submit" value="キャンセル" class="btn btn-outline-danger">
-            </form>
+            <div>
+                <h3 class="fs-4">メモ追加</h3>
+                @if (!empty(session('completed_memo')))
+                    <p class="text-success">{{ session('completed_memo') }}</p>
+                @endif
+                <form action="{{ route('admin.reserve.update', $reserve->id) }}" id="memo" method="post">
+                    @csrf
+                    @method('PUT')
+                    <textarea name="memo" id="" cols="70" rows="5">{{ $reserve->memo ?? ''}}</textarea>
+                </form>
+                <input type="submit" value="メモを登録" class="btn btn-outline-primary" form="memo">
+            </div>
+            <div class="mt-2">
+                <a href="{{ route('admin.reserve.index') }}" class="btn btn-outline-primary">予約一覧に戻る</a>
+            </div>
+            <div class="mt-4">
+                <h3 class="fs-4">予約キャンセル</h3>
+                <form action="{{ route('admin.reserve.delete', $reserve->id) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="キャンセル" class="btn btn-outline-danger">
+                </form>
+            </div>
         </div>
     </x-container>
 </x-layout>

@@ -14,7 +14,7 @@ class ReserveController extends Controller
         $reserves = Reserve::with('plan', 'reserveSlot.room')->get()->sortBy(function ($reserve) {
             return $reserve->reserveSlot->date;
         });
-        // $reserves = Reserve::all();
+
         return view('admin.reserve.index')->with('reserves', $reserves);
     }
 
@@ -23,6 +23,13 @@ class ReserveController extends Controller
         $reserve = Reserve::with('plan', 'reserveSlot.room')->findOrFail($reserve_id);
 
         return view('admin.reserve.show')->with('reserve', $reserve);
+    }
+
+    public function update(Request $request, $reserve_id)
+    {
+        $reserve = Reserve::findOrFail($reserve_id)->update(['memo' => $request->memo]);
+        
+        return back()->with('completed_memo', 'メモの追加が完了しました');
     }
 
     public function destroy($reserve_id)
