@@ -17,20 +17,20 @@
             <tbody>
                 @foreach ($inquiries as $index => $inquiry)
                 <tr>
-                    <th>{{ $index + 1 }}</th>
-                    <th><select name="type" id="selectStatus" class="{{ $inquiry->getStatusColor($inquiry->inquiry_status_id) }} bg-opacity-50"
+                    <td>{{ $index + 1 }}</td>
+                    <td><select name="type" id="selectStatus" class="{{ $inquiry->getStatusColor($inquiry->inquiry_status_id) }} bg-opacity-50"
                             onchange="changeInquiryStatus({{ $inquiry->id }}, this.value)">
                             @foreach ($inquiry_statuses as $inquiry_status)
                             <option value="{{ $inquiry_status->id }}" {{ $inquiry->inquiry_status_id ==
                                 $inquiry_status->id ? 'selected' : ''}} >{{ $inquiry_status->status }}</option>
                             @endforeach
-                    </th>
-                    <th>{{ $inquiry->inquiryType->name }}</th>
-                    <th>{{ $inquiry->first_name }} {{ $inquiry->last_name }}</th>
-                    <th>{{ $inquiry->email }}</th>
-                    <th>{{ $inquiry->telephone_number }}</th>
-                    <th>{{ $inquiry->stay_date }}</th>
-                    <th><a href="{{ route('admin.inquiry.show', $inquiry->id) }}" class="btn btn-outline-primary">詳細</a></th>
+                    </td>
+                    <td>{{ $inquiry->inquiryType->name }}</td>
+                    <td>{{ $inquiry->first_name }} {{ $inquiry->last_name }}</td>
+                    <td>{{ $inquiry->email }}</td>
+                    <td>{{ $inquiry->telephone_number }}</td>
+                    <td>{{ $inquiry->stay_date }}</td>
+                    <td><a href="{{ route('admin.inquiry.show', $inquiry->id) }}" class="btn btn-outline-primary">詳細</a></td>
                 </tr>
                 @endforeach
             </tbody>
