@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Reserve\CancelReserve;
 use App\Models\Reserve;
 use App\Models\Reserve_slot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ReserveController extends Controller
 {
@@ -41,7 +43,9 @@ class ReserveController extends Controller
 
     public function destroy($reserve_id)
     {
-        Reserve::destroy($reserve_id);
+        $reserve = Reserve::findOrFail($reserve_id);
+        Mail::to($reserve->email)->send(new CancelReserve($reserve));
+        $reserve->delete();
 
         return to_route('admin.reserve.index');
     }
