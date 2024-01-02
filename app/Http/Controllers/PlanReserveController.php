@@ -17,7 +17,12 @@ class PlanReserveController extends Controller
     public function create($plan_id, $reserve_slot_id)
     {
         $plan_reserve = Plan_reserve_slot::with('plan.images:plan_id,path')->where('plan_id', $plan_id)->where('reserve_slot_id', $reserve_slot_id)->first();
-        return view('reserve.create')->with('plan_reserve', $plan_reserve);
+
+        //予約枠の部屋の数
+        $reserve_slot_number_of_rooms = Reserve_slot::findOrFail($reserve_slot_id)->number_of_rooms;
+        return view('reserve.create')
+            ->with('plan_reserve', $plan_reserve)
+            ->with('reserve_slot_number_of_rooms', $reserve_slot_number_of_rooms);
     }
 
     public function comfilm(Request $request)
