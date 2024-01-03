@@ -2,7 +2,13 @@
     <x-container>
         <h3 class="fs-3">宿泊プラン一覧</h3>
         <div>
-            <a href="{{ route('admin.plan.create') }}" class="btn btn-outline-primary">新規作成</a>
+            @if ($has_reserve_slot)
+            <a href="{{ route('admin.plan.create') }}" class="btn btn-outline-primary"
+            >新規作成</a>
+            @else
+            <h3 class="text-danger fs-3">予約枠がないので登録できません</h3>
+            <a href="{{ route('admin.reserve_slot.create') }}" class="btn btn-outline-primary">予約枠登録画面へ</a>
+            @endif
         </div>
         <table class="table">
             <thead>
