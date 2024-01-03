@@ -11,6 +11,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PlanDetailController;
 use App\Http\Controllers\PlanReserveController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +32,7 @@ Route::get('/', function () {
 Route::get('/access', function () {
     return view('access.index');
 })->name('access.index');
-Route::get('/room', function () {
-    return view('room.index');
-})->name('room.index');
+
 
 //プラン
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
@@ -62,6 +61,9 @@ Route::get('/events/{id}/party-room', [PlanDetailController::class, 'index']);
 Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.index');
 Route::post('inquiry/confirm', [InquiryController::class, 'comfilm'])->name('inquiry.comfilm');
 Route::post('inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
+
+//部屋
+Route::get('/room', [RoomController::class, 'index'])->name('room.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
