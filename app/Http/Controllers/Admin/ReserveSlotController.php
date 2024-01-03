@@ -58,13 +58,12 @@ class ReserveSlotController extends Controller
         DB::transaction(function () use ($reserve_slot_id) {
         $reserve_slot = Reserve_slot::findOrFail($reserve_slot_id);
         
-        $reserve_slot->planReserveSlot()->detach($reserve_slot_id);
-        $reserve_slot->planReserve()->detach($reserve_slot_id);
+        $reserve_slot->planReserveSlot()->detach();
+        $reserve_slot->planReserve()->detach();
 
         $reserve_slot = Reserve_slot::destroy($reserve_slot_id);
-
-        });
         
+        });
         return to_route('admin.reserve_slot.index');
     }
 }
