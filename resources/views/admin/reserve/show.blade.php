@@ -57,6 +57,9 @@
                     <input type="submit" value="キャンセル" class="btn btn-outline-danger">
                 </form>
             </div>
+            <div class="mt-4">
+                <a href="{{ route('admin.reserve.index') }}" class="btn btn-outline-dark">戻る</a>
+            </div>
         </div>
     </x-container>
 </x-layout>

@@ -35,6 +35,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-4">
+            <a href="{{ route('admin.index') }}" class="btn btn-outline-dark">戻る</a>
+        </div>
     </x-container>
 </x-layout>
 

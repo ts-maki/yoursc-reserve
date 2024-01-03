@@ -25,13 +25,17 @@
                                 value="{{ $reserve_slot->id }}" class="checkbox">
                             {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}</label>
                         <input type="number" name="reserve_slot_fee[{{ $reserve_slot->id }}]" id="" step="100"
-                            placeholder="予約枠の料金" class="reserve-slot">
+                            placeholder="予約枠の料金" class="reserve-slot" min="0">
                     </div>
                     @endforeach
                 </div>
                 <input type="submit" value="作成" class="btn btn-outline-primary">
             </form>
+            <div class="mt-4">
+                <a href="{{ route('admin.plan.index') }}" class="btn btn-outline-dark">戻る</a>
+            </div>
         </div>
+        
     </x-container>
 </x-layout>
 

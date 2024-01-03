@@ -7,14 +7,18 @@ use App\Models\Image;
 use App\Models\Plan;
 use App\Models\Reserve_slot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlanController extends Controller
 {
     public function index()
     {
         $plans = Plan::with('images')->get();
+
+        $has_reserve_slot = DB::table('reserve_slots')->exists();
         return view('admin.plan.index')
-            ->with('plans', $plans);
+            ->with('plans', $plans)
+            ->with('has_reserve_slot', $has_reserve_slot);
     }
     
     public function create()
@@ -52,13 +56,6 @@ class PlanController extends Controller
             $plan_reserve_slot->planReserveSlot()->syncWithoutDetaching([
                 $reserve_slot_id => ['fee' => $fee]
             ]);
-        }
-
-        //宿泊プランと部屋の関係を登録
-        foreach ($request->reserve_slot as $reserve_slot_id) {
-            $plan = Plan::findOrFail($plan->id);
-            $room_id = Reserve_slot::FindOrFail($reserve_slot_id)->room_id;
-            $plan->planRoom()->syncWithoutDetaching($room_id);
         }
 
         return to_route('admin.plan.index');

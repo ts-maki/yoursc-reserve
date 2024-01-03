@@ -11,6 +11,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PlanDetailController;
 use App\Http\Controllers\PlanReserveController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +32,7 @@ Route::get('/', function () {
 Route::get('/access', function () {
     return view('access.index');
 })->name('access.index');
-Route::get('/room', function () {
-    return view('room.index');
-})->name('room.index');
+
 
 //プラン
 Route::get('/plan', [PlanController::class, 'index'])->name('plan.index');
@@ -63,6 +62,9 @@ Route::get('/inquiry', [InquiryController::class, 'create'])->name('inquiry.inde
 Route::post('inquiry/confirm', [InquiryController::class, 'comfilm'])->name('inquiry.comfilm');
 Route::post('inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
 
+//部屋
+Route::get('/room', [RoomController::class, 'index'])->name('room.index');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -73,14 +75,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin');
-    Route::get('/admin', function () {
         return view('admin.index');
     })->name('admin.index');
+
+    //お問い合わせ
     Route::get('/admin/inquiry', [AdminInquiryController::class, 'index'])->name('admin.inquiry.index');
     Route::put('/admin/inquiry/{id}/{status_id}', [AdminInquiryController::class, 'update']);
     Route::get('admin/inquiry/{id}', [AdminInquiryController::class, 'show'])->name('admin.inquiry.show');
+
+    //予約枠
     Route::get('admin/reserve-slot', [ReserveSlotController::class, 'index'])->name('admin.reserve_slot.index');
     Route::get('admin/reserve-slot/create', [ReserveSlotController::class, 'create'])->name('admin.reserve_slot.create');
     Route::post('admin/reserve-slot/create', [ReserveSlotController::class, 'store'])->name('admin.reserve_slot.store');

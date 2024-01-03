@@ -11,7 +11,7 @@
             @endforeach
         </div>
         <p>{{ $plan->description }}</p>
-        <div class="w-50">
+        <div>
             <div class="flex">
                 @if ($is_jp_room)
                 <a href="{{ route('plan.show.jp', $plan->id) }}" class="btn
@@ -51,6 +51,9 @@
                 @endif
             </div>
             <div id='calendar'></div>
+        </div>
+        <div class="mt-4">
+            <a href="{{ route('plan.index') }}" class="btn btn-outline-dark">戻る</a>
         </div>
     </x-container>
 </x-layout>

@@ -50,4 +50,9 @@ class Reserve_slot extends Model
             get: fn ($value) => Carbon::parse($value)->timezone('Asia/Tokyo')->isoFormat('YYYY年M月D日(d)')
         );
     }
+
+    public function planReserve()
+    {
+        return $this->belongsToMany(Plan::class, 'reserves')->withTimestamps();
+    }
 }

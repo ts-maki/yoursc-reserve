@@ -21,5 +21,8 @@
                 <input type="submit" value="更新" class="btn btn-outline-primary">
             </form>
         </div>
+        <div class="mt-4">
+            <a href="{{ route('admin.reserve_slot.index') }}" class="btn btn-outline-dark">戻る</a>
+        </div>
     </x-container>
 </x-layout>

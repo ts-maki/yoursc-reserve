@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Reserve_slot;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReserveSlotController extends Controller
 {
@@ -54,8 +55,15 @@ class ReserveSlotController extends Controller
 
     public function destroy($reserve_slot_id)
     {
-        $reserve_slot = Reserve_slot::destroy($reserve_slot_id);
+        DB::transaction(function () use ($reserve_slot_id) {
+        $reserve_slot = Reserve_slot::findOrFail($reserve_slot_id);
+        
+        $reserve_slot->planReserveSlot()->detach();
+        $reserve_slot->planReserve()->detach();
 
+        $reserve_slot = Reserve_slot::destroy($reserve_slot_id);
+        
+        });
         return to_route('admin.reserve_slot.index');
     }
 }
