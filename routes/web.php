@@ -78,9 +78,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', function () {
         return view('admin.index');
     })->name('admin.index');
+
+    //お問い合わせ
     Route::get('/admin/inquiry', [AdminInquiryController::class, 'index'])->name('admin.inquiry.index');
     Route::put('/admin/inquiry/{id}/{status_id}', [AdminInquiryController::class, 'update']);
     Route::get('admin/inquiry/{id}', [AdminInquiryController::class, 'show'])->name('admin.inquiry.show');
+
+    //予約枠
     Route::get('admin/reserve-slot', [ReserveSlotController::class, 'index'])->name('admin.reserve_slot.index');
     Route::get('admin/reserve-slot/create', [ReserveSlotController::class, 'create'])->name('admin.reserve_slot.create');
     Route::post('admin/reserve-slot/create', [ReserveSlotController::class, 'store'])->name('admin.reserve_slot.store');
