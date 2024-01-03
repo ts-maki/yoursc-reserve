@@ -39,6 +39,9 @@
                 </div>
                 <input type="submit" value="入力内容の確認" class="btn btn-outline-primary">
             </form>
+            <div class="mt-4">
+                <a href="{{ route('top') }}" class="btn btn-outline-dark">戻る</a>
+            </div>
         </div>
     </x-container>
 </x-layout>

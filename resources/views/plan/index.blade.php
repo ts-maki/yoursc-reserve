@@ -77,5 +77,8 @@
             <p>宿泊プランが登録されていません</p>
             @endforelse
         </div>
+        <div class="mt-4">
+            <a href="{{ route('top') }}" class="btn btn-outline-dark">戻る</a>
+        </div>
     </x-container>
 </x-layout>

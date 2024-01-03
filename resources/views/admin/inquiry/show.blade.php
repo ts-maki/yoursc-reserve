@@ -17,5 +17,8 @@
             <p>メッセージ</p>
             <p class="border p-2 rounded">{{ $inquiry->message }}</p>
         </div>
+        <div class="mt-4">
+            <a href="{{ route('admin.inquiry.index') }}" class="btn btn-outline-dark">戻る</a>
+        </div>
     </x-container>
 </x-layout>

@@ -44,7 +44,7 @@ class InquiryController extends Controller
 
         $inquiry = Inquiry::findOrFail($inquiry->id);
         Mail::to($inquiry->email)->send(new CompleteInquiry($inquiry));
-        Mail::to('reserve-admin@example.com')->send(new NewInquiry($inquiry));
+        Mail::to('mirai79mirai@gmail.com')->send(new NewInquiry($inquiry));
 
         $request->session()->forget('inquiry_data');
 

@@ -5,9 +5,14 @@
         </a>
         <nav class="navbar">
             <ul class="d-flex">
-                @auth
+                @guest
                 <li class="nav-item"><a class="nav-link active text-dark p-2" aria-current="page"
-                        href="{{ route('profile.edit') }}">アカウント設定</a></li>
+                    href="{{ route('login') }}">ログイン</a></li>
+            <li class="nav-item">
+                @endguest
+                @auth
+                {{-- <li class="nav-item"><a class="nav-link active text-dark p-2" aria-current="page"
+                        href="{{ route('profile.edit') }}">アカウント設定</a></li> --}}
                 <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}" class="nav-link p-2">
                         @csrf
@@ -16,9 +21,6 @@
                     </form>
                 </li>
                 @endauth
-                {{-- <li class="nav-item">
-                    <a class="nav-link text-dark p-2" href="{{ route('register') }}">ユーザー登録</a>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link text-dark p-2" href="{{ route('plan.index') }}">宿泊プラン</a>
                 </li>

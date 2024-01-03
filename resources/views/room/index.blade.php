@@ -21,5 +21,8 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-4">
+            <a href="{{ route('top') }}" class="btn btn-outline-dark">戻る</a>
+        </div>
     </x-container>
 </x-layout>

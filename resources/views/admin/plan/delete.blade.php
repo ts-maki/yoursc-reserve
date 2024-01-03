@@ -49,6 +49,9 @@
                     @method('DELETE')
                     <input type="submit" value="削除" class="btn btn-outline-danger">
                 </form>
+                <div class="mt-4">
+                    <a href="{{ route('admin.plan.index') }}" class="btn btn-outline-dark">戻る</a>
+                </div>
         </div>
     </x-container>
 </x-layout>
