@@ -49,7 +49,7 @@
                         {{ $reserve_slot->date }} :{{ $reserve_slot->room->name }}
                         </label>
                         <input type="number" name="reserve_slot_fee[{{ $reserve_slot->id }}]" id="" step="100"
-                            placeholder="予約枠の料金" class="reserve-slot"
+                            placeholder="予約枠の料金" class="reserve-slot" min="0"
                             @foreach ($plan_reserve_slots as $plan_reserve_slot)
                                 @if ($plan_reserve_slot->reserve_slot_id ==  $reserve_slot->id)
                                     value="{{ old('reserve_slot_fee', $plan_reserve_slot->fee) }}"
