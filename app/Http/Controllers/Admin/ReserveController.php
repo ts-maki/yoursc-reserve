@@ -74,6 +74,8 @@ class ReserveController extends Controller
             if (count($has_reserve) > 0) {
                 return $reserve;
             }
+        })->sortBy(function ($reserve) {
+            return $reserve->reserveSlot->date;
         });
 
         return view('admin.reserve.index')
