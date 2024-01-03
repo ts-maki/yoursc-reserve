@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendReminders;
 use App\Mail\Reserve\CancelReserve;
+use App\Mail\Reserve\RemindPreviousReserve;
 use App\Models\Reserve;
 use App\Models\Reserve_slot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\Mail;
 
 class ReserveController extends Controller
@@ -34,6 +38,12 @@ class ReserveController extends Controller
 
     public function show($reserve_id)
     {
+        $previous_reserves = Reserve::with('reserveSlot.room', 'plan')->get()->filter(function ($reserve) {
+            $is_previous_reserve = Carbon::now()->addDay()->format('Y-m-d') == $reserve->reserveSlot->date;
+            if ($is_previous_reserve !== false) {
+                return $reserve;
+            }
+        });
         $reserve = Reserve::with('plan', 'reserveSlot.room')->findOrFail($reserve_id);
 
         return view('admin.reserve.show')->with('reserve', $reserve);
