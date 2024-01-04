@@ -60,12 +60,27 @@ class PlanDetailController extends Controller
 
         $reserve_slots = Reserve_slot::with('room')->whereIn('id', $plan_reserve_slots_ids)->orderBy('id')->get();
 
-        if (url()->current() == env('APP_URL'). '/events/'. $plan_id) {
-            $room = 'all';
+        //プランの詳細の予約枠を全部表示するカレンダーはローカルか本番環境かでコードを分ける
+        
+        if (app()->isProduction()) {
+            // TODO 暫定処理なのであとで検討 ×ハードコーディング
+            if (url()->current() == 'http://52.69.110.71/events/'. $plan_id) {
+                $room = 'all';
+    
+                $plan_reserve_slots = Plan_reserve_slot::where('plan_id', $plan_id)->select('reserve_slot_id', 'fee');
+                $events = $this->planService->getEventsByRoom($plan_reserve_slots, $room, $plan_id);
+                return $events;
+            }
+        }
 
-            $plan_reserve_slots = Plan_reserve_slot::where('plan_id', $plan_id)->select('reserve_slot_id', 'fee');
-            $events = $this->planService->getEventsByRoom($plan_reserve_slots, $room, $plan_id);
-            return $events;
+        if (app()->isLocal()) {
+            if (url()->current() == env('APP_URL'). '/events/'. $plan_id) {
+                $room = 'all';
+    
+                $plan_reserve_slots = Plan_reserve_slot::where('plan_id', $plan_id)->select('reserve_slot_id', 'fee');
+                $events = $this->planService->getEventsByRoom($plan_reserve_slots, $room, $plan_id);
+                return $events;
+            }
         }
 
         //部屋タイプ別にフルカレンダーに送るeventsをわける
