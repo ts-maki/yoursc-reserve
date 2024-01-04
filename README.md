@@ -9,11 +9,11 @@
 - 管理者は予約管理、宿泊管理ができる
 
 ## サービスのURL
-http://52.69.110.71/
+http://52.69.110.71/  
 AWSのEC2にデプロイ
 
 ## ER図
-![](%E4%BA%88%E7%B4%84%E3%82%B5%E3%82%A4%E3%83%88_ER%E5%9B%B3.drawio.png)
+![image](https://github.com/mirai-79/yoursc-reserve/assets/99461088/82ea400c-83a0-43c0-a4ba-b1a8439e037a)
 
 ## サービス概要
 ### 宿泊者
