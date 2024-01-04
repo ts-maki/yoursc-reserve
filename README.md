@@ -1,66 +1,57 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## はじめに
+デザインと非機能要件の多くを満たしていない。バリデーション機能を入れていないので未入力ではエラー画面が出る。エラー内容が出るようにAPP_DEBUG=trueのまま。機能を優先した結果という言い訳である。
+デプロイ翌日に設定、ルート、ビューのキャッシュコマンドを実行したら宿泊カレンダーに
+予約枠が表示されなくなってしまった。部屋タイプ別では表示される。
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# 宿泊予約サイト
+## アプリの概要
+- 宿泊者は希望する宿泊プランで空室状況を確認し、選択した日にちと部屋タイプで予約ができる
+- 管理者は予約管理、宿泊管理ができる
 
-## About Laravel
+## サービスのURL
+http://52.69.110.71/
+AWSのEC2にデプロイ
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ER図
+![](%E4%BA%88%E7%B4%84%E3%82%B5%E3%82%A4%E3%83%88_ER%E5%9B%B3.drawio.png)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## サービス概要
+### 宿泊者
+#### お問い合わせ
+ホテルにお問い合わせができる。お問い合わせ後に宿泊者にはお問い合わせ完了メールが届き
+管理者にはお問い合わせ受付メールが届く
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 予約
+- 宿泊プランを日付範囲選択、今日、明日から検索ができ、希望する日にちの予約枠がある宿泊プランが表示される
+- 希望する宿泊プランを選択できる
+- 宿泊者はプラン詳細のカレンダーに表示されている空室状況と値段を確認して選択し、予約ができる
+- カレンダー部屋タイプ別で表示切替可能
+- 予約後に宿泊者には予約完了メール、管理者には新規予約受付メールが届く
+- 宿泊前日に予約状況リマインドメールが届く
 
-## Learning Laravel
+### 管理者
+#### お問い合わせ
+- お問い合わせを一覧で確認
+- ステータスを対応待ち、対応中、完了にできる
+- 詳細ボタンからお問い合わせ詳細を確認できる
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### 予約枠
+- 予約枠を日にち、部屋タイプ、部屋の数を指定して作成できる
+- 編集
+- 削除
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### 宿泊プラン
+- 宿泊プランを一覧で確認
+- 画像を複数アップロードできる
+- 宿泊プランに登録する予約枠を選択して料金設定ができる
+- 編集では既存の画像の差し替え、画像の削除、追加の画像登録、予約枠の日にちと料金を変更できる
+- 削除
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### 予約
+- 予約を一覧で確認
+- 予約を日付範囲選択、今日、明日から検索ができる
+- 詳細画面からメモの追加と予約キャンセルができる
+- 予約キャンセル時に宿泊者に予約キャンセルメールが届く
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 今後の展望
+フルカレンダーの全部の部屋タイプの予約枠が表示されないバグに対応。表示判定ロジックから変える。
