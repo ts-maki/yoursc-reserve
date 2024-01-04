@@ -14,6 +14,10 @@
 ## サービスのURL
 http://52.69.110.71/  
 AWSのEC2にデプロイ
+### 管理者ログイン
+| メールアドレス     | パスワード |
+| ---      | ---       |
+| admin@example.com | adminadmin |
 
 ## ER図
 ![image](https://github.com/mirai-79/yoursc-reserve/assets/99461088/82ea400c-83a0-43c0-a4ba-b1a8439e037a)
